@@ -17,11 +17,12 @@ class CustomDrawer extends GetView {
       children: [
         Container(
           key: Key('container-drawer'),
-          height: Get.height,
+          height: Get.height -70,
           width: 300,
           child: Drawer(
             child: Container(
                 height: Get.height,
+                margin: EdgeInsets.only(bottom: 50),
                 child: ListView.separated(
                   itemCount: controller.topics.length + 1,
                   separatorBuilder: (context, index) => index > 0

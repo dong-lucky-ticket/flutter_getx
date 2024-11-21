@@ -11,7 +11,6 @@ class CustomDrawerHeaderWidget extends StatelessWidget {
       child: Container(
         width: 200,
         height: 50,
-        color: Colors.amberAccent,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
