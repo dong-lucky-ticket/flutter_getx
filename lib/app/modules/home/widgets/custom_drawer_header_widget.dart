@@ -7,33 +7,36 @@ import 'package:get/get.dart';
 class CustomDrawerHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DrawerHeader(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
       child: Container(
-        width: 200,
-        height: 50,
-        color: Colors.amberAccent,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        color: Colors.redAccent,
+        child: Row(
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/rocket_minimal.png'))),
+            CircleAvatar(
+              radius: 32, // 设置头像的半径为11
+              child: Image.asset(
+                'assets/images/avatar_girl.png',
               ),
-              Text(
-                'GetX_Pattern'.tr,
-                style: TextStyle(fontSize: 24, color: spotlightColor),
-              ),
-              Container(child: CustomSwitchWidget()),
-            ]),
-            Text(
-              'Project_using_GetX_Library'.tr,
-              style: TextStyle(fontSize: 16, color: softBlue),
             ),
-          ],
+            const SizedBox(width: 16),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('自律的小码农',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Get.isDarkMode? Colors.white : Colors.black)),
+                Text('攒钱的小码农',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Get.isDarkMode? Colors.white : Colors.black)),
+              ],
+            )
+          ]
         ),
       ),
     );
