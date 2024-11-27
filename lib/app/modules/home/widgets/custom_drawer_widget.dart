@@ -12,39 +12,43 @@ class CustomDrawer extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          key: Key('container-drawer'),
-          height: Get.height,
-          width: 300,
-          child: Drawer(
-            child: Container(
-                height: Get.height,
-                child: ListView.separated(
-                  itemCount: controller.topics.length + 1,
-                  separatorBuilder: (context, index) => index > 0
-                      ? Divider(
-                          height: 2,
-                          color: spotlightColor,
-                          indent: 2,
-                          endIndent: 80,
-                        )
-                      : Container(),
-                  itemBuilder: (c, i) {
-                    return i == 0
-                        ? CustomDrawerHeaderWidget()
-                        : CustomItemDrawer(
-                            text: controller.topics[i - 1],
-                            index: i - 1,
-                          );
-                  },
-                )),
+    print(Get.height);
+    return Drawer(
+      child: Container(
+        color: Colors.cyan[50],
+        child: SafeArea(
+          child: Column(
+            children: [
+              CustomDrawerHeaderWidget(),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  ),
+                  margin: const EdgeInsets.all(16),
+                  child: ListView.separated(
+                    itemCount: controller.topics.length,
+                    separatorBuilder: (context, index) => Divider(
+                      height: 2,
+                      color: spotlightColor,
+                      indent: 2,
+                      endIndent: 80,
+                    ),
+                    itemBuilder: (c, i) {
+                      return CustomItemDrawer(
+                        text: controller.topics[i],
+                        index: i,
+                      );
+                    },
+                  ),
+                ),
+              ),
+              CustomIconsLinks()
+            ],
           ),
         ),
-        CustomIconsLinks()
-      ],
+      ),
     );
   }
 }

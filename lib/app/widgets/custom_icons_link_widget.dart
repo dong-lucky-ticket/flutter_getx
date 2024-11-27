@@ -14,23 +14,22 @@ class CustomIconsLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        flex: 1,
-        child: Container(
-            width: 300,
-            color: Get.isDarkMode ? spotlightColor : softBlue,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded( flex: 2,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: this.imagesUrl.length,
-                        itemBuilder: (c, i) {
-                          return CustomIconWidget(url: this.imagesUrl[i]);
-                        }),
-                  )
-                ])));
+    return Container(
+        width: 300,
+        height: 70,
+        color: Get.isDarkMode ? spotlightColor : softBlue,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded( flex: 2,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: this.imagesUrl.length,
+                    itemBuilder: (c, i) {
+                      return CustomIconWidget(url: this.imagesUrl[i]);
+                    }),
+              )
+            ]));
   }
 }
