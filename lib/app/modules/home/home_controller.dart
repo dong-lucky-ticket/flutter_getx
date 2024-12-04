@@ -7,19 +7,11 @@ class HomeController extends GetxController {
   static HomeController get to => Get.find();
 
   List<String> topics = [
-    'Home'.tr,
-    'Structure'.tr,
-    'GetX'.tr,
-    'Data'.tr,
-    'Provider'.tr,
-    'Model'.tr,
-    'Repository'.tr,
-    'Controller'.tr,
-    'Bindings'.tr,
-    'UI'.tr,
-    'Rotas'.tr,
-    'Translations'.tr,
-    'Tutoriais'.tr,
+    '家庭账单',
+    '设置',
+    '使用帮助',
+    '意见反馈',
+    '关于',
   ];
   final box = GetStorage();
 
@@ -29,19 +21,11 @@ class HomeController extends GetxController {
 
   void refreshTopics() {
     topics = [
-      'Home'.tr,
-      'Structure'.tr,
-      'GetX'.tr,
-      'Data'.tr,
-      'Provider'.tr,
-      'Model'.tr,
-      'Repository'.tr,
-      'Controller'.tr,
-      'Bindings'.tr,
-      'UI'.tr,
-      'Rotas'.tr,
-      'Translations'.tr,
-      'Tutoriais'.tr,
+      '家庭账单',
+      '设置',
+      '使用帮助',
+      '意见反馈',
+      '关于',
     ];
   }
 

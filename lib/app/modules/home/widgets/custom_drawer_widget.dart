@@ -4,15 +4,17 @@ import 'package:app_demo/app/modules/home/home_controller.dart';
 import 'package:app_demo/app/modules/home/widgets/custom_drawer_header_widget.dart';
 import 'package:app_demo/app/modules/home/widgets/custom_item_drawer_widget.dart';
 import 'package:app_demo/app/theme/app_colors.dart';
-import 'package:app_demo/app/widgets/custom_icons_link_widget.dart';
 import 'package:get/get.dart';
+import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 class CustomDrawer extends GetView {
+  CustomDrawer({super.key});
+
+  @override
   final HomeController controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
-    print(Get.height);
     return Drawer(
       child: Container(
         color: Colors.cyan[50],
@@ -29,11 +31,11 @@ class CustomDrawer extends GetView {
                   margin: const EdgeInsets.all(16),
                   child: ListView.separated(
                     itemCount: controller.topics.length,
-                    separatorBuilder: (context, index) => Divider(
+                    separatorBuilder: (context, index) => const Divider(
                       height: 2,
-                      color: spotlightColor,
-                      indent: 2,
-                      endIndent: 80,
+                      color: lightGrey,
+                      indent: 12,
+                      endIndent: 12,
                     ),
                     itemBuilder: (c, i) {
                       return CustomItemDrawer(
@@ -44,7 +46,21 @@ class CustomDrawer extends GetView {
                   ),
                 ),
               ),
-              CustomIconsLinks()
+              // CustomIconsLinks()
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: TDButton(
+                  text: '放个按钮',
+                  size: TDButtonSize.large,
+                  type: TDButtonType.fill,
+                  shape: TDButtonShape.rectangle,
+                  theme: TDButtonTheme.primary,
+                  isBlock: true,
+                  onTap: () {
+                    TDToast.showText('还没想好做什么，先放这儿', context: context);
+                  },
+                ),
+              )
             ],
           ),
         ),
