@@ -53,24 +53,4 @@ class HomeController extends GetxController {
     themeIsDark = !themeIsDark;
   }
 
-  final _lang = 'en-US'.obs;
-  String get lang => _lang.value;
-  set lang(value) => _lang.value = value;
-
-  changeLanguage(lang) {
-    lang = lang;
-    if (lang == 'pt-BR') {
-      Get.updateLocale(const Locale('pt', 'BR'));
-    } else if (lang == 'en-US') {
-      Get.updateLocale(const Locale('en', 'US'));
-    } else if (lang == 'es-MX') {
-      Get.updateLocale(const Locale('es', 'MX'));
-    }
-    refreshTopics();
-    print('> local , lang = ${Get.locale} , $lang');
-    print('>> GetX , oi = ' + 'GetX'.tr + ' , ' + 'oi'.tr);
-  }
-
-  nextPage() => screen < topics.length ? screen++ : null;
-  previousPage() => screen > 0 ? screen-- : null;
 }
