@@ -52,7 +52,7 @@ class AccountModal {
       id: map['id'] as String,
       type: map['type'] as String,
       recordDate: map['recordDate'] as String,
-      money: map['money'] as double,
+      money: map['money'].toDouble(),
       desc: map['desc'] as String,
       category: map['category'] as String,
     );

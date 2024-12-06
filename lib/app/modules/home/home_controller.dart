@@ -1,10 +1,29 @@
+import 'package:app_demo/app/data/model/account.dart';
+import 'package:app_demo/app/data/provider/account.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:get_storage/get_storage.dart';
 
-class HomeController extends GetxController {
-  static HomeController get to => Get.find();
+// https://segmentfault.com/a/1190000039902160
+// StateMixin参考智障轻言‘getx model实例如何定...’
+class HomeController extends GetxController with StateMixin<AccountModal> {
+
+  final AccountProvider provider;
+  HomeController({required this.provider});
+
+  final Rx<AccountModal?> _account = Rx(null);
+  get account => _account.value;
+  set account(value) => _account.value = value;
+  
+
+  // 拉取新闻列表
+  Future<void> getList() async {
+    final res = await provider.getDetail();
+
+    account = res.result;
+    update();
+  }
 
   List<String> topics = [
     '家庭账单',
@@ -34,6 +53,7 @@ class HomeController extends GetxController {
     super.onInit();
     box.writeIfNull('key', false);
     themeIsDark = box.read('key');
+    getList();
   }
 
   @override

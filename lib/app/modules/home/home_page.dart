@@ -5,12 +5,9 @@ import 'package:app_demo/app/modules/home/widgets/custom_drawer_widget.dart';
 import 'package:get/get.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
-class HomePage extends GetView {
+class HomePage extends GetView<HomeController> {
   HomePage({super.key});
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  final HomeController controller = Get.put(HomeController());
 
 
   @override
@@ -102,6 +99,8 @@ class HomePage extends GetView {
                     // setState(() {
                     //   _basicData[index].isExpanded = !isExpanded;
                     // });
+                    TDToast.showText('$index', context: context);
+                    controller.getList();
                   },
                   children: [
                     TDCollapsePanel(
@@ -109,13 +108,16 @@ class HomePage extends GetView {
                         return const Text('2024-12-04');
                       },
                       isExpanded: true,
-                      body: const Column(
-                        children: [
-                          TDCell(arrow: false, title: '云厨房', rightIconWidget: Text('¥ 15.7')),
-                          TDCell(arrow: false, title: 'KFC', rightIconWidget: Text('¥ 29.9')),
-                          TDCell(arrow: false, title: '米粥', rightIconWidget: Text('¥ 0')),
-                        ]
-                      ),
+                      body: Obx(() {
+                        return Text(controller.account?.money?.toString() ?? '0');
+                      })
+                      // body: const Column(
+                      //   children: [
+                      //     TDCell(arrow: false, title: '云厨房', rightIconWidget: Text('¥ 15.7')),
+                      //     TDCell(arrow: false, title: 'KFC', rightIconWidget: Text('¥ 29.9')),
+                      //     TDCell(arrow: false, title: '米粥', rightIconWidget: Text('¥ 0')),
+                      //   ]
+                      // ),
                     )
                   ]
                 );

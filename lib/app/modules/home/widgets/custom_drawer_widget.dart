@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_demo/app/modules/home/home_controller.dart';
 import 'package:app_demo/app/modules/home/widgets/custom_drawer_header_widget.dart';
 import 'package:app_demo/app/modules/home/widgets/custom_item_drawer_widget.dart';
 import 'package:app_demo/app/theme/app_colors.dart';
@@ -8,10 +7,7 @@ import 'package:get/get.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 class CustomDrawer extends GetView {
-  CustomDrawer({super.key});
-
-  @override
-  final HomeController controller = Get.put(HomeController());
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
