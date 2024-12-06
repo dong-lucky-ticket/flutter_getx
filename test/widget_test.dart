@@ -5,26 +5,28 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:app_demo/app/model/account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:app_demo/main.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    final jn = {
+      "type": "支出",
+      "recordDate": "2024-12-09",
+      "money": -150.00,
+      "desc": "购买办公用品",
+      "category": "办公"
+    };
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    final acc = Account.fromJson(jn);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    final date = DateFormat('yyyy-MM-dd')
+        .format(DateTime.parse("2018-12-10T15:46:20.897228"));
+
+    print(date);
+    print(acc);
   });
 }

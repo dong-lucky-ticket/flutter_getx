@@ -1,8 +1,6 @@
-import 'package:intl/intl.dart';
-
 class Account {
   String type;
-  DateTime recordDate;
+  String recordDate;
   double money;
   String desc;
   String category;
@@ -12,7 +10,7 @@ class Account {
   factory Account.fromJson(Map<String, dynamic> json) {
     return Account(
       json['type'],
-      DateFormat('yyyy-MM-dd').parse(json['recordDate']),
+      json['recordDate'],
       json['money'],
       json['desc'],
       json['category'],
@@ -22,7 +20,7 @@ class Account {
   Map<String, dynamic> toJson() {
     return {
       'type': type,
-      'recordDate': recordDate.toIso8601String(),
+      'recordDate': recordDate,
       'money': money,
       'desc': desc,
       'category': category,
