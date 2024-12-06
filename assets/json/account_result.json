@@ -1,0 +1,90 @@
+{
+  "code": 200,
+  "message": "查询成功",
+  "success": true,
+  "result": {
+    "data": [
+      {
+        "id": "1",
+        "type": "收入",
+        "recordDate": "2024-12-01",
+        "money": 5000.0,
+        "desc": "11月份工资",
+        "category": "工资收入"
+      },
+      {
+        "id": "2",
+        "type": "支出",
+        "recordDate": "2024-12-02",
+        "money": 150.0,
+        "desc": "超市购物",
+        "category": "日常生活"
+      },
+      {
+        "id": "3",
+        "type": "收入",
+        "recordDate": "2024-12-03",
+        "money": 800.0,
+        "desc": "兼职收入",
+        "category": "其他收入"
+      },
+      {
+        "id": "4",
+        "type": "支出",
+        "recordDate": "2024-12-04",
+        "money": 300.0,
+        "desc": "话费充值",
+        "category": "通讯费用"
+      },
+      {
+        "id": "5",
+        "type": "支出",
+        "recordDate": "2024-12-05",
+        "money": 200.0,
+        "desc": "电影票",
+        "category": "娱乐消费"
+      },
+      {
+        "id": "6",
+        "type": "收入",
+        "recordDate": "2024-12-06",
+        "money": 1000.0,
+        "desc": "投资收益",
+        "category": "理财收益"
+      },
+      {
+        "id": "7",
+        "type": "支出",
+        "recordDate": "2024-12-07",
+        "money": 50.0,
+        "desc": "公交卡充值",
+        "category": "交通出行"
+      },
+      {
+        "id": "8",
+        "type": "收入",
+        "recordDate": "2024-12-08",
+        "money": 120.0,
+        "desc": "卖二手物品",
+        "category": "其他收入"
+      },
+      {
+        "id": "9",
+        "type": "支出",
+        "recordDate": "2024-12-09",
+        "money": 250.0,
+        "desc": "健身房会员费",
+        "category": "运动健身"
+      },
+      {
+        "id": "10",
+        "type": "支出",
+        "recordDate": "2024-12-10",
+        "money": 180.0,
+        "desc": "餐厅用餐",
+        "category": "餐饮消费"
+      }
+    ],
+    "total": 23
+  }
+}
