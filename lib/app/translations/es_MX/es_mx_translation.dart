@@ -1,6 +1,6 @@
 // part './strings_es_mx.dart';
 
-part './strings_es_mx.dart';
+part 'strings_es_mx.dart';
 
 final Map<String, String> esMx = {
   'Home': HOME,

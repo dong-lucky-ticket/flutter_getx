@@ -1,4 +1,4 @@
-part './strings_en_us.dart';
+part 'strings_en_us.dart';
 
 final Map<String, String> enUs = {
   'Home': HOME,

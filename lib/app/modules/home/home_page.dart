@@ -1,151 +1,76 @@
 import 'package:flutter/material.dart';
 
+import 'package:app_demo/app/modules/apresentacao/apresentacao_page.dart';
+import 'package:app_demo/app/modules/controller/controller_page.dart';
+import 'package:app_demo/app/modules/data/data_page.dart';
+import 'package:app_demo/app/modules/estrutura/estrutura_page.dart';
+import 'package:app_demo/app/modules/getx/getx_page.dart';
 import 'package:app_demo/app/modules/home/home_controller.dart';
+import 'package:app_demo/app/modules/home/widgets/custom_drawer_button_widget.dart';
 import 'package:app_demo/app/modules/home/widgets/custom_drawer_widget.dart';
+import 'package:app_demo/app/modules/model/model_page.dart';
+import 'package:app_demo/app/modules/provider/providar_page.dart';
+import 'package:app_demo/app/modules/repository/repository_page.dart';
+import 'package:app_demo/app/modules/routes/routes_pages.dart';
+import 'package:app_demo/app/modules/tutorials/tutorials_page.dart';
+import 'package:app_demo/app/modules/ui/ui_page.dart';
+import 'package:app_demo/app/widgets/custom_button_language_widget.dart';
 import 'package:get/get.dart';
-import 'package:tdesign_flutter/tdesign_flutter.dart';
 
-class HomePage extends GetView<HomeController> {
-  HomePage({super.key});
+class HomePage extends GetView {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final HomeController controller = Get.put(HomeController());
 
+  final List<Widget> screens = [
+    ApresentacaoPage(),
+    EstruturaPage(),
+    GetXPage(),
+    DataPage(),
+    ProviderPage(),
+    ModelPage(),
+    RepositoryPage(),
+    ControllerPage(),
+    UiPage(),
+    RoutesPage(), //add translations
+    TutorialsPage(),
+  ];
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: Scaffold(
-        key: _scaffoldKey,
-        drawer: CustomDrawer(),
-        appBar: AppBar(
-          leading: Container(
-            padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
-            child: CircleAvatar(
-              foregroundColor: Colors.red,
-              child: GestureDetector(
-                onTap: () {
-                  _scaffoldKey.currentState?.openDrawer();
-                },
-                child: Image.asset(
-                  'assets/images/avatar_girl.png',
-                  width: 32,
-                  height: 32,
-                ),
-              ),
+    print('> home - build() : GetX , oi = ' + 'GetX'.tr + ' , ' + 'oi'.tr);
+    return Scaffold(
+      key: _scaffoldKey,
+      drawer: CustomDrawer(),
+      body: Stack(
+        children: <Widget>[
+          SafeArea(
+              child: Obx(
+            () => Container(
+                color: Colors.red,
+                padding: EdgeInsets.all(0),
+                child: this.screens[controller.screen]),
+          )),
+          // SafeArea(
+          //     child: Obx(() => Container(
+          //           color: Colors.red,
+          //           padding: EdgeInsets.all(0),
+          //           child: this.screens[controller.screen],
+          //         )),
+          //         ),
+          Positioned(
+            top: 8,
+            left: 5,
+            child: SafeArea(
+              child: CustomDrawerButtonWidget(
+                  callback: () => _scaffoldKey.currentState?.openDrawer()),
             ),
           ),
-          title: const Text('首页'),
-          bottom: const TabBar(
-            tabs: <Widget>[
-              Tab(text: '全部'),
-              Tab(text: '支出'),
-              Tab(text: '收入'),
-            ]
+          Positioned(
+            top: 8,
+            right: 5,
+            child: SafeArea(child: CustomSelectLanguageWidget()),
           ),
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            ListView.builder(
-              itemCount: 25,
-              itemBuilder: (BuildContext context, int index) {
-                return TDCollapse(
-                  style: TDCollapseStyle.block,
-                  expansionCallback: (int index, bool isExpanded) {
-                    // setState(() {
-                    //   _basicData[index].isExpanded = !isExpanded;
-                    // });
-                  },
-                  children: [1, 2, 3].map((item) {
-                    return TDCollapsePanel(
-                      headerBuilder: (BuildContext context, bool isExpanded) {
-                        return Text('账目$item');
-                      },
-                      isExpanded: false,
-                      body: const Text('randomString'),
-                    );
-                  }).toList(),
-                );
-              },
-            ),
-            ListView.builder(
-              itemCount: 25,
-              itemBuilder: (BuildContext context, int index) {
-                return TDCollapse(
-                  style: TDCollapseStyle.block,
-                  expansionCallback: (int index, bool isExpanded) {
-                    // setState(() {
-                    //   _basicData[index].isExpanded = !isExpanded;
-                    // });
-                  },
-                  children: [
-                    TDCollapsePanel(
-                      headerBuilder: (BuildContext context, bool isExpanded) {
-                        return const Text('2024-12-04');
-                      },
-                      isExpanded: false,
-                      body: const Text('randomString'),
-                    )
-                  ]
-                );
-              },
-            ),
-            ListView.builder(
-              itemCount: 25,
-              itemBuilder: (BuildContext context, int index) {
-                return TDCollapse(
-                  style: TDCollapseStyle.block,
-                  expansionCallback: (int index, bool isExpanded) {
-                    // setState(() {
-                    //   _basicData[index].isExpanded = !isExpanded;
-                    // });
-                    TDToast.showText('$index', context: context);
-                    controller.getList();
-                  },
-                  children: [
-                    TDCollapsePanel(
-                      headerBuilder: (BuildContext context, bool isExpanded) {
-                        return const Text('2024-12-04');
-                      },
-                      isExpanded: true,
-                      body: Obx(() {
-                        return Text(controller.account?.money?.toString() ?? '0');
-                      })
-                      // body: const Column(
-                      //   children: [
-                      //     TDCell(arrow: false, title: '云厨房', rightIconWidget: Text('¥ 15.7')),
-                      //     TDCell(arrow: false, title: 'KFC', rightIconWidget: Text('¥ 29.9')),
-                      //     TDCell(arrow: false, title: '米粥', rightIconWidget: Text('¥ 0')),
-                      //   ]
-                      // ),
-                    )
-                  ]
-                );
-              },
-            ),
-            // ListView.builder(
-            //   itemCount: 25,
-            //   itemBuilder: (BuildContext context, int index) {
-            //     return TDCollapse.accordion(children: [
-            //       TDCollapsePanel(
-            //         headerBuilder: (BuildContext context, bool isExpanded) {
-            //           return const Text('2024-12-03');
-            //         },
-            //         isExpanded: false,
-            //         body: const Text('randomString')
-            //         // body: const Column(
-            //         //   children: [
-            //         //     TDCell(arrow: false, title: '云厨房', rightIconWidget: Text('¥ 15.7')),
-            //         //     TDCell(arrow: false, title: 'KFC', rightIconWidget: Text('¥ 29.9')),
-            //         //     TDCell(arrow: false, title: '米粥', rightIconWidget: Text('¥ 0')),
-            //         //   ]
-            //         // ),
-            //       )
-            //     ],);
-            //   },
-            // ),
-          ],
-        ),
+        ],
       ),
     );
   }

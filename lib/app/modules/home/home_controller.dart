@@ -1,36 +1,25 @@
-import 'package:app_demo/app/data/model/account.dart';
-import 'package:app_demo/app/data/provider/account.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:get_storage/get_storage.dart';
 
-// https://segmentfault.com/a/1190000039902160
-// StateMixin参考智障轻言‘getx model实例如何定...’
-class HomeController extends GetxController with StateMixin<AccountModal> {
-
-  final AccountProvider provider;
-  HomeController({required this.provider});
-
-  final Rx<AccountModal?> _account = Rx(null);
-  get account => _account.value;
-  set account(value) => _account.value = value;
-  
-
-  // 拉取新闻列表
-  Future<void> getList() async {
-    final res = await provider.getDetail();
-
-    account = res.result;
-    update();
-  }
+class HomeController extends GetxController {
+  static HomeController get to => Get.find();
 
   List<String> topics = [
-    '家庭账单',
-    '设置',
-    '使用帮助',
-    '意见反馈',
-    '关于',
+    'Home'.tr,
+    'Structure'.tr,
+    'GetX'.tr,
+    'Data'.tr,
+    'Provider'.tr,
+    'Model'.tr,
+    'Repository'.tr,
+    'Controller'.tr,
+    'Bindings'.tr,
+    'UI'.tr,
+    'Rotas'.tr,
+    'Translations'.tr,
+    'Tutoriais'.tr,
   ];
   final box = GetStorage();
 
@@ -40,11 +29,19 @@ class HomeController extends GetxController with StateMixin<AccountModal> {
 
   void refreshTopics() {
     topics = [
-      '家庭账单',
-      '设置',
-      '使用帮助',
-      '意见反馈',
-      '关于',
+      'Home'.tr,
+      'Structure'.tr,
+      'GetX'.tr,
+      'Data'.tr,
+      'Provider'.tr,
+      'Model'.tr,
+      'Repository'.tr,
+      'Controller'.tr,
+      'Bindings'.tr,
+      'UI'.tr,
+      'Rotas'.tr,
+      'Translations'.tr,
+      'Tutoriais'.tr,
     ];
   }
 
@@ -53,7 +50,6 @@ class HomeController extends GetxController with StateMixin<AccountModal> {
     super.onInit();
     box.writeIfNull('key', false);
     themeIsDark = box.read('key');
-    getList();
   }
 
   @override
@@ -73,4 +69,24 @@ class HomeController extends GetxController with StateMixin<AccountModal> {
     themeIsDark = !themeIsDark;
   }
 
+  final _lang = 'en-US'.obs;
+  String get lang => _lang.value;
+  set lang(value) => _lang.value = value;
+
+  changeLanguage(lang) {
+    lang = lang;
+    if (lang == 'pt-BR') {
+      Get.updateLocale(const Locale('pt', 'BR'));
+    } else if (lang == 'en-US') {
+      Get.updateLocale(const Locale('en', 'US'));
+    } else if (lang == 'es-MX') {
+      Get.updateLocale(const Locale('es', 'MX'));
+    }
+    refreshTopics();
+    print('> local , lang = ${Get.locale} , $lang');
+    print('>> GetX , oi = ' + 'GetX'.tr + ' , ' + 'oi'.tr);
+  }
+
+  nextPage() => screen < topics.length ? screen++ : null;
+  previousPage() => screen > 0 ? screen-- : null;
 }
