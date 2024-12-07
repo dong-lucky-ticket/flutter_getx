@@ -15,10 +15,20 @@ class HomeController extends GetxController with StateMixin<AccountModal> {
   final Rx<AccountModal?> _account = Rx(null);
   get account => _account.value;
   set account(value) => _account.value = value;
+  final RxList<AccountModal?> _accountList = RxList([]);
+  get accountList => _accountList;
+  set accountList(value) => _accountList.value = value;
   
 
   // 拉取新闻列表
   Future<void> getList() async {
+    final res = await provider.getList();
+
+    accountList = res.result?.data ?? [];
+    update();
+  }
+  // 拉取新闻列表
+  Future<void> getDetail() async {
     final res = await provider.getDetail();
 
     account = res.result;

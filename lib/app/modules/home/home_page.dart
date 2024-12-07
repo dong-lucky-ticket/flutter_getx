@@ -69,27 +69,53 @@ class HomePage extends GetView<HomeController> {
               },
             ),
             ListView.builder(
-              itemCount: 25,
-              itemBuilder: (BuildContext context, int index) {
-                return TDCollapse(
-                  style: TDCollapseStyle.block,
-                  expansionCallback: (int index, bool isExpanded) {
-                    // setState(() {
-                    //   _basicData[index].isExpanded = !isExpanded;
-                    // });
-                  },
-                  children: [
-                    TDCollapsePanel(
-                      headerBuilder: (BuildContext context, bool isExpanded) {
-                        return const Text('2024-12-04');
-                      },
-                      isExpanded: false,
-                      body: const Text('randomString'),
-                    )
-                  ]
-                );
-              },
-            ),
+                itemCount: 15,
+                itemBuilder: (BuildContext context, int index) {
+                  return TDCollapse(
+                    style: TDCollapseStyle.block,
+                    expansionCallback: (int index, bool isExpanded) {
+                      // setState(() {
+                      //   _basicData[index].isExpanded = !isExpanded;
+                      // });
+                    },
+                    children: Obx(() {
+                      return controller.accountList?.map<TDCollapsePanel>(item=> {
+                        return TDCollapsePanel(
+                          headerBuilder: (BuildContext context, bool isExpanded) {
+                            return const Text('2024-12-04');
+                          },
+                          isExpanded: false,
+                          body: const Text('randomString'),
+                        );
+                      });
+                      
+                    }))
+                  );
+                },
+              ),
+            
+            // ListView.builder(
+            //   itemCount: 25,
+            //   itemBuilder: (BuildContext context, int index) {
+            //     return TDCollapse(
+            //       style: TDCollapseStyle.block,
+            //       expansionCallback: (int index, bool isExpanded) {
+            //         // setState(() {
+            //         //   _basicData[index].isExpanded = !isExpanded;
+            //         // });
+            //       },
+            //       children: [
+            //         TDCollapsePanel(
+            //           headerBuilder: (BuildContext context, bool isExpanded) {
+            //             return const Text('2024-12-04');
+            //           },
+            //           isExpanded: false,
+            //           body: const Text('randomString'),
+            //         )
+            //       ]
+            //     );
+            //   },
+            // ),
             ListView.builder(
               itemCount: 25,
               itemBuilder: (BuildContext context, int index) {
@@ -100,7 +126,7 @@ class HomePage extends GetView<HomeController> {
                     //   _basicData[index].isExpanded = !isExpanded;
                     // });
                     TDToast.showText('$index', context: context);
-                    controller.getList();
+                    controller.getDetail();
                   },
                   children: [
                     TDCollapsePanel(
