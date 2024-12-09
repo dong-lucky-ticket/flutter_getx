@@ -61,8 +61,18 @@ class HomePage extends GetView<HomeController> {
                       headerBuilder: (BuildContext context, bool isExpanded) {
                         return Text('账目$item');
                       },
-                      isExpanded: false,
-                      body: const Text('randomString'),
+                      isExpanded: true,
+                      body: Obx(() {
+                        return TDCellGroup(
+                          cells: controller.accountList.map<TDCell>((item) {
+                            return TDCell(
+                              arrow: false,
+                              title: item.category,
+                              rightIconWidget: Text('¥ ${item.money.toString()}')
+                            );
+                          }).toList(),
+                        );
+                      })
                     );
                   }).toList(),
                 );
@@ -71,26 +81,26 @@ class HomePage extends GetView<HomeController> {
             ListView.builder(
                 itemCount: 15,
                 itemBuilder: (BuildContext context, int index) {
-                  return TDCollapse(
-                    style: TDCollapseStyle.block,
-                    expansionCallback: (int index, bool isExpanded) {
-                      // setState(() {
-                      //   _basicData[index].isExpanded = !isExpanded;
-                      // });
-                    },
-                    children: Obx(() {
-                      return controller.accountList?.map<TDCollapsePanel>(item=> {
+
+                  return Obx(() {
+                    return TDCollapse(
+                      style: TDCollapseStyle.block,
+                      expansionCallback: (int index, bool isExpanded) {
+                        // setState(() {
+                        //   _basicData[index].isExpanded = !isExpanded;
+                        // });
+                      },
+                      children: controller.accountList.map<TDCollapsePanel>((item) {
                         return TDCollapsePanel(
                           headerBuilder: (BuildContext context, bool isExpanded) {
-                            return const Text('2024-12-04');
+                            return Text('${item.recordDate}');
                           },
-                          isExpanded: false,
-                          body: const Text('randomString'),
+                          isExpanded: true,
+                          body: Text(item.money.toString()),
                         );
-                      });
-                      
-                    }))
-                  );
+                      }).toList(),
+                    );
+                  });
                 },
               ),
             
