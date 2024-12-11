@@ -1,5 +1,5 @@
-import 'package:app_demo/app/data/model/account.dart';
-import 'package:app_demo/app/data/provider/account.dart';
+import 'package:flutter_getx/app/data/model/account.dart';
+import 'package:flutter_getx/app/data/provider/account.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_demo/app/routes/app_pages.dart';
+import 'package:flutter_getx/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 

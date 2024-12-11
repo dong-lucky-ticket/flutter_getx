@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_demo/app/theme/app_colors.dart';
-import 'package:app_demo/app/widgets/custom_icon_widget.dart';
+import 'package:flutter_getx/app/theme/app_colors.dart';
+import 'package:flutter_getx/app/widgets/custom_icon_widget.dart';
 import 'package:get/get.dart';
 
 class CustomIconsLinks extends StatelessWidget {

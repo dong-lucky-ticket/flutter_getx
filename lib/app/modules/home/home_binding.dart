@@ -1,5 +1,5 @@
-import 'package:app_demo/app/data/provider/account.dart';
-import 'package:app_demo/app/modules/home/home_controller.dart';
+import 'package:flutter_getx/app/data/provider/account.dart';
+import 'package:flutter_getx/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
 
 class HomeBinding implements Bindings {

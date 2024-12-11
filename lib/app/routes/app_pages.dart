@@ -1,7 +1,7 @@
 
-import 'package:app_demo/app/modules/home/home_binding.dart';
-import 'package:app_demo/app/modules/home/home_page.dart';
-import 'package:app_demo/app/modules/splash/splash_page.dart';
+import 'package:flutter_getx/app/modules/home/home_binding.dart';
+import 'package:flutter_getx/app/modules/home/home_page.dart';
+import 'package:flutter_getx/app/modules/splash/splash_page.dart';
 import 'package:get/get.dart';
 part './app_routes.dart';
 
