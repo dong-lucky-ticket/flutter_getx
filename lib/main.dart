@@ -15,7 +15,7 @@ void main() async {
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: Routes.INITIAL,
-    home: SplashPage(),
+    home: const SplashPage(),
 
     translationsKeys: AppTranslation.translations,
     // translations: AppTranslation(),
@@ -24,8 +24,8 @@ void main() async {
     getPages: AppPages.pages,
     theme: appThemeData,
     // locale: Locale('es', 'MX'),
-    locale: Locale('en', 'US'),
-    fallbackLocale: Locale('en', 'US'),
+    locale: const Locale('en', 'US'),
+    fallbackLocale: const Locale('en', 'US'),
 
     defaultTransition: Transition.rightToLeftWithFade,
   ));

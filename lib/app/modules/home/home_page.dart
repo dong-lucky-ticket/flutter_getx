@@ -17,7 +17,7 @@ class HomePage extends GetView<HomeController> {
       length: 3,
       child: Scaffold(
         key: _scaffoldKey,
-        drawer: CustomDrawer(),
+        drawer: const CustomDrawer(),
         appBar: AppBar(
           leading: Container(
             padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),

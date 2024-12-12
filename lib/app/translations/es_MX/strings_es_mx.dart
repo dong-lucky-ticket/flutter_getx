@@ -1,4 +1,4 @@
-part of './es_mx_translation.dart';
+part of 'es_mx_translation.dart';
 
 const HOME = "Hogar";
 const STRUCTURE = "Estructura";

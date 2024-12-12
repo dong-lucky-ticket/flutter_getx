@@ -11,12 +11,12 @@ class CustomTitleWidget extends Container {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 8, bottom: 8.0),
+      padding: const EdgeInsets.only(top: 8, bottom: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            this.title.tr,
+            title.tr,
             style: titulo,
           ),
         ],

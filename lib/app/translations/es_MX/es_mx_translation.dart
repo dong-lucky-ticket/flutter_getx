@@ -1,6 +1,6 @@
 // part './strings_es_mx.dart';
 
-part './strings_es_mx.dart';
+part 'strings_es_mx.dart';
 
 final Map<String, String> esMx = {
   'Home': HOME,
@@ -83,7 +83,7 @@ final Map<String, String> esMx = {
   'getx_In_the_case_of_our_Lists_it_is_not':
       'En el caso de nuestras Listas, no es necesario usar el .value, por lo que a diferencia de un RxString donde accederías al valor contenido con text.value, con las listas puedes trabajar normalmente, considerando que tanto tu lista como los objetos dentro de él, todos son observables, por lo que podemos acceder a sus atributos de esta manera myList.length o myList [index] .name.',
   'getx_We_go_to_the_Stateless_class_responsible':
-      'Pasamos a la clase Stateless, encargado de visualizar a nuestro contador. No te equivocas, con GetX nunca puedes volver a usar un stateful al cambiar tus estados, cancela el setState, nuestro widget GetX se reconstruye cada vez que un objeto, contenido en él, tiene el estado cambiado por el controlador configurado en el widget.let \ Vamos al código.',
+      'Pasamos a la clase Stateless, encargado de visualizar a nuestro contador. No te equivocas, con GetX nunca puedes volver a usar un stateful al cambiar tus estados, cancela el setState, nuestro widget GetX se reconstruye cada vez que un objeto, contenido en él, tiene el estado cambiado por el controlador configurado en el widget.let  Vamos al código.',
   'getx_Well_this_is_a_basic_widget_we':
       'Bueno, este es un widget básico, solo mostramos un texto y dos botones responsables de activar nuestros eventos de decremento () e incremento (), ¿recuerdas? están en nuestro controlador.',
   'objective': 'Objetiva',

@@ -8,19 +8,19 @@ class CustomIconWidget extends Container {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 32),
+      margin: const EdgeInsets.only(left: 32),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           GestureDetector(
             
             //abrir navegadores links
-            onTap: () => print('clico'),
+            onTap: () => debugPrint('clico'),
             child: Container(
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(this.url)))),
+                    image: DecorationImage(image: AssetImage(url)))),
           )
         ],
       ),

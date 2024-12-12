@@ -5,11 +5,10 @@ import 'package:get/get.dart';
 
 
 class SplashPage extends StatefulWidget {
-//repository injection
-//final MyRepository repository = MyRepository(apiClient: MyApiClient(httpClient: http.Client()));
+  const SplashPage({super.key});
 
   @override
-  _SplashPageState createState() => _SplashPageState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage>
@@ -25,7 +24,7 @@ class _SplashPageState extends State<SplashPage>
     super.initState();
     _animationController = AnimationController(
       vsync: this, 
-      duration: Duration(milliseconds: 2300),
+      duration: const Duration(milliseconds: 2300),
     );
     _animation = CurvedAnimation(
       parent: _animationController.view,
