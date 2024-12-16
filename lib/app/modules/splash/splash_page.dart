@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_demo/app/routes/app_pages.dart';
+import 'package:flutter_getx/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 
 class SplashPage extends StatefulWidget {
+  const SplashPage({super.key});
+
 //repository injection
 //final MyRepository repository = MyRepository(apiClient: MyApiClient(httpClient: http.Client()));
 
@@ -25,7 +27,7 @@ class _SplashPageState extends State<SplashPage>
     super.initState();
     _animationController = AnimationController(
       vsync: this, 
-      duration: Duration(milliseconds: 2300),
+      duration: const Duration(milliseconds: 2300),
     );
     _animation = CurvedAnimation(
       parent: _animationController.view,

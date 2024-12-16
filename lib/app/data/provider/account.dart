@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:app_demo/app/data/model/account.dart';
-import 'package:app_demo/app/data/model/paginated_data.dart';
-import 'package:app_demo/app/data/model/response.dart';
+import 'package:flutter_getx/app/data/model/account.dart';
+import 'package:flutter_getx/app/data/model/paginated_data.dart';
+import 'package:flutter_getx/app/data/model/response.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 

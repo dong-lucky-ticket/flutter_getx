@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_demo/app/theme/app_colors.dart';
-import 'package:app_demo/app/widgets/custom_icon_widget.dart';
+import 'package:flutter_getx/app/theme/app_colors.dart';
+import 'package:flutter_getx/app/widgets/custom_icon_widget.dart';
 import 'package:get/get.dart';
 
 class CustomIconsLinks extends StatelessWidget {
@@ -11,6 +11,8 @@ class CustomIconsLinks extends StatelessWidget {
     'assets/images/telegram.png',
     'assets/images/microsoft.png',
   ];
+
+  const CustomIconsLinks({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,9 @@ class CustomIconsLinks extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: this.imagesUrl.length,
+                    itemCount: imagesUrl.length,
                     itemBuilder: (c, i) {
-                      return CustomIconWidget(url: this.imagesUrl[i]);
+                      return CustomIconWidget(url: imagesUrl[i]);
                     }),
               )
             ]));

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomImageContainerWidget extends Container {
   final String urlImage;
 
-  CustomImageContainerWidget({required this.urlImage});
+  CustomImageContainerWidget({super.key, required this.urlImage});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class CustomImageContainerWidget extends Container {
         width: 350,
         decoration: BoxDecoration(
             image: DecorationImage(
-          image: AssetImage(this.urlImage),
+          image: AssetImage(urlImage),
         )),
       ),
     );

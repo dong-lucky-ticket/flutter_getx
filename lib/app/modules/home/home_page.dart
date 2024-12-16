@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_demo/app/modules/home/home_controller.dart';
-import 'package:app_demo/app/modules/home/widgets/custom_drawer_widget.dart';
+import 'package:flutter_getx/app/modules/home/home_controller.dart';
+import 'package:flutter_getx/app/modules/home/widgets/custom_drawer_widget.dart';
 import 'package:get/get.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
