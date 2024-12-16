@@ -15,7 +15,7 @@ class CustomIconWidget extends Container {
           GestureDetector(
             
             //abrir navegadores links
-            onTap: () => print('clico'),
+            onTap: () => debugPrint('clico'),
             child: Container(
                 height: 40,
                 width: 40,

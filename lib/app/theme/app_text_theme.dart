@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getx/app/theme/app_colors.dart';
 
-final titulo =
+const titulo =
     TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: spotlightColor);
 const subTitulo = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
 const textInfo = TextStyle(color: Colors.grey);

@@ -12,7 +12,7 @@ class CustomIconsLinks extends StatelessWidget {
     'assets/images/microsoft.png',
   ];
 
-  const CustomIconsLinks({super.key});
+   CustomIconsLinks({super.key});
 
   @override
   Widget build(BuildContext context) {

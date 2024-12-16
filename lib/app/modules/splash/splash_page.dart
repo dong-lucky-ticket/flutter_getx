@@ -11,7 +11,7 @@ class SplashPage extends StatefulWidget {
 //final MyRepository repository = MyRepository(apiClient: MyApiClient(httpClient: http.Client()));
 
   @override
-  _SplashPageState createState() => _SplashPageState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage>

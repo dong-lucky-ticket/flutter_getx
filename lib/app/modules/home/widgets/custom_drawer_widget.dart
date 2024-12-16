@@ -17,7 +17,7 @@ class CustomDrawer extends GetView {
         child: SafeArea(
           child: Column(
             children: [
-              CustomDrawerHeaderWidget(),
+              const CustomDrawerHeaderWidget(),
               Expanded(
                 child: Container(
                   decoration: const BoxDecoration(

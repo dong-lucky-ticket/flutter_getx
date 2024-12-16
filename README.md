@@ -1,4 +1,4 @@
-# app_demo
+# flutter_getx
 
 A new Flutter project.
 
