@@ -3,7 +3,7 @@ import 'package:flutter_getx/app/data/provider/account.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:get_storage/get_storage.dart';
+// import 'package:get_storage/get_storage.dart';
 
 // https://segmentfault.com/a/1190000039902160
 // StateMixin参考智障轻言‘getx model实例如何定...’
@@ -42,7 +42,7 @@ class HomeController extends GetxController with StateMixin<AccountModal> {
     '意见反馈',
     '关于',
   ];
-  final box = GetStorage();
+  // final box = GetStorage();
 
   final _themeIsDark = false.obs;
   get themeIsDark => _themeIsDark.value;
@@ -61,8 +61,8 @@ class HomeController extends GetxController with StateMixin<AccountModal> {
   @override
   onInit() {
     super.onInit();
-    box.writeIfNull('key', false);
-    themeIsDark = box.read('key');
+    // box.writeIfNull('key', false);
+    // themeIsDark = box.read('key');
     getList();
   }
 
@@ -79,7 +79,7 @@ class HomeController extends GetxController with StateMixin<AccountModal> {
   changeTheme() async {
     Get.changeTheme(
         themeIsDark == false ? ThemeData.light() : ThemeData.dark());
-    box.write('key', themeIsDark);
+    // box.write('key', themeIsDark);
     themeIsDark = !themeIsDark;
   }
 
