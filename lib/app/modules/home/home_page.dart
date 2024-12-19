@@ -9,7 +9,6 @@ class HomePage extends GetView<HomeController> {
   HomePage({super.key});
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,39 +33,21 @@ class HomePage extends GetView<HomeController> {
         ),
         title: const Text('首页'),
       ),
-      body: ListView.builder(
-        itemCount: 15,
-        itemBuilder: (BuildContext context, int index) {
-
-          return Obx(() {
-
-            return GFListTile(
-              avatar:GFAvatar(),
-              titleText: controller.accountList[index]?.recordDate,
-              subTitleText:controller.accountList[index]?.money.toString(),
-              icon: Icon(Icons.favorite)
-            );
-
-
-
-            // return TDCollapse(
-            //   style: TDCollapseStyle.block,
-            //   expansionCallback: (int index, bool isExpanded) {
-            //     // setState(() {
-            //     //   _basicData[index].isExpanded = !isExpanded;
-            //     // });
-            //   },
-            //   children: controller.accountList.map<TDCollapsePanel>((item) {
-            //     return TDCollapsePanel(
-            //       headerBuilder: (BuildContext context, bool isExpanded) {
-            //         return Text('${item.recordDate}');
-            //       },
-            //       isExpanded: true,
-            //       body: Text(item.money.toString()),
-            //     );
-            //   }).toList(),
-            // );
-          });
+      body: Obx(
+        () {
+          return ListView.builder(
+              itemCount: controller.accountList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GFListTile(
+                    avatar: const GFAvatar(
+                      backgroundImage:
+                          AssetImage('assets/images/avatar_girl.png'),
+                    ),
+                    titleText: controller.accountList[index]?.recordDate,
+                    subTitleText:
+                        controller.accountList[index]?.money.toString(),
+                    icon: const Icon(Icons.favorite));
+              });
         },
       ),
     );

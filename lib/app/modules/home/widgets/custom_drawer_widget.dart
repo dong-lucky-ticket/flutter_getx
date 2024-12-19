@@ -6,7 +6,9 @@ import 'package:flutter_getx/app/theme/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 
-class CustomDrawer extends GetView {
+import '../home_controller.dart';
+
+class CustomDrawer extends GetView<HomeController> {
   const CustomDrawer({super.key});
 
   @override
