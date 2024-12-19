@@ -1,0 +1,45 @@
+name: flutter_getx
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  get: ^4.6.6
+  intl: ^0.19.0
+  getwidget: ^5.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/json/
+
+    - assets/images/github.png
+    - assets/images/microsoft.png
+    - assets/images/dart.png
+    - assets/images/telegram.png
+    - assets/images/rocket_minimal.png
+    - assets/images/rocket_minimal_new.png
+    - assets/images/en-flag.png
+    - assets/images/es-flag.jpg
+    - assets/images/br-flag.jpg
+    - assets/images/strc_module.png
+    - assets/images/strc.png
+    - assets/images/benchmark.png
+    - assets/images/main_count.png
+    - assets/images/controller_counter.png
+    - assets/images/page_counter.png
+    - assets/images/avatar_girl.png
