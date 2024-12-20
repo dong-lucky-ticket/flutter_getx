@@ -46,12 +46,17 @@ class CustomDrawer extends GetView<HomeController> {
               ),
               // CustomIconsLinks()
               Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
+                padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
                 child: GFButton(
                   text: '放个按钮',
                   blockButton: true,
+                  size: GFSize.LARGE,
                   onPressed: () {
-                    GFToast.showToast('还没想好做什么，先放这儿', context);
+                    GFToast.showToast(
+                      '还没想好做什么，先放这儿',
+                      context,
+                      toastPosition: GFToastPosition.BOTTOM,
+                    );
                   },
                 ),
               )
