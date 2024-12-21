@@ -1,20 +1,20 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_getx/app/data/model/account.dart';
 import 'package:flutter_getx/app/data/model/paginated_data.dart';
 import 'package:flutter_getx/app/data/model/response.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
-
-class AccountProvider extends GetConnect {
+final dio = Dio();
+class AccountProvider {
 
   // Future<Response<CasesModel>> getList(List<int> image) {
  
   //   return post('http://youapi/users/upload', form);
   // }
 
-  Future<ResponseModal<PaginatedData<AccountModal>>> getList() async {
+  static Future<ResponseModal<PaginatedData<AccountModal>>> getList() async {
  
     final response = await rootBundle.loadString('assets/json/account_result.json');
     final responseJson = jsonDecode(response);
@@ -23,11 +23,11 @@ class AccountProvider extends GetConnect {
     return ResponseModal(result: result, message: responseJson['message'], success: responseJson['success'], code: responseJson['code']);
   }
 
-  Future<ResponseModal<AccountModal>> getDetail() async {
+  static Future<ResponseModal<AccountModal>> getDetail() async {
 
-    Response response = await get('https://mock.presstime.cn/mock/6752fc425750db2bfa560d29/example/account/detail');
+    Response response = await dio.get('https://mock.presstime.cn/mock/6752fc425750db2bfa560d29/example/account/detail');
 
-    return ResponseModal.fromMap(response.body, (map)=> AccountModal.fromMap(map));
+    return ResponseModal.fromMap(response.data, (map)=> AccountModal.fromMap(map));
     // final result = AccountModal.fromMap(response.body['result']);
     // return ResponseModal(result: result, message: response.body['message'], success: response.body['success'], code: response.body['code']);
   }

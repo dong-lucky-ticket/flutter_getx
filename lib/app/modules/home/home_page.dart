@@ -1,14 +1,47 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_getx/app/modules/home/home_controller.dart';
 import 'package:flutter_getx/app/modules/home/widgets/custom_drawer_widget.dart';
-import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:getwidget/getwidget.dart';
 
-class HomePage extends GetView<HomeController> {
-  HomePage({super.key});
+import '../../data/model/account.dart';
+import '../../data/provider/account.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  late AccountModal account;
+  late List<AccountModal?> accountList = [];
+
+  // 拉取新闻列表
+  Future<void> getList() async {
+    final res = await AccountProvider.getList();
+    setState(() {
+      accountList = res.result?.data ?? [];
+    });
+  }
+  // 拉取新闻列表
+  Future<void> getDetail() async {
+    final res = await AccountProvider.getDetail();
+
+    setState(() {
+      account = res.result!;
+    });
+  }
+
+  @override
+  void initState() {
+    getList();
+    getDetail();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +49,7 @@ class HomePage extends GetView<HomeController> {
       key: _scaffoldKey,
       drawer: const CustomDrawer(),
       appBar: GFAppBar(
-        // leading: Container(
-        //   padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
-        //   child: CircleAvatar(
-        //     foregroundColor: Colors.red,
-        //     child: GestureDetector(
-        //       onTap: () {
-        //         _scaffoldKey.currentState?.openDrawer();
-        //       },
-        //       child: Image.asset(
-        //         'assets/images/avatar_girl.png',
-        //         width: 32,
-        //         height: 32,
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        backgroundColor: GFColors.DARK,
         leading: Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
           child: GestureDetector(
@@ -43,26 +61,35 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
         ),
-        title: const Text('账单'),
+        title: const Text(
+          '账单',
+          style: TextStyle(fontSize: 20),
+        ),
         centerTitle: true,
       ),
-      body: Obx(
-        () {
-          return ListView.builder(
-              itemCount: controller.accountList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GFListTile(
-                    avatar: const GFAvatar(
-                      backgroundImage:
-                          AssetImage('assets/images/avatar_girl.png'),
-                    ),
-                    titleText: controller.accountList[index]?.recordDate,
-                    subTitleText:
-                        controller.accountList[index]?.money.toString(),
-                    icon: const Icon(Icons.favorite));
-              });
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Get.toNamed('/add');
         },
+        child: const Icon(Icons.add),
       ),
+      body: ListView.builder(
+          itemCount: accountList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GFCard(
+              content: GFListTile(
+                avatar: const GFAvatar(
+                  backgroundImage:
+                      AssetImage('assets/images/avatar_girl.png'),
+                ),
+                titleText: accountList[index]?.recordDate,
+                subTitleText:
+                    accountList[index]?.money.toString(),
+                icon: const Icon(Icons.favorite)),
+            );
+          }
+        )
     );
   }
 }

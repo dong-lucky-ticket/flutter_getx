@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_getx/app/modules/home/home_controller.dart';
 import 'package:flutter_getx/app/theme/app_colors.dart';
-import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 
-class CustomItemDrawer extends GetView {
+class CustomItemDrawer extends StatelessWidget {
   final String text;
   final int index;
-  CustomItemDrawer({super.key, required this.text, required this.index});
-
-  @override
-  final HomeController controller = Get.find<HomeController>();
+  const CustomItemDrawer({super.key, required this.text, required this.index});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      hoverColor: Get.isDarkMode ? softBlue : spotlightColor,
-      highlightColor: Get.isDarkMode ? softBlue : spotlightColor,
-      splashColor: Get.isDarkMode ? spotlightColor : softBlue,
+      hoverColor: spotlightColor,
+      highlightColor: spotlightColor,
+      splashColor: softBlue,
       onTap: () {
-        // controller.screen = index ;
-        // Scaffold.of(context).openEndDrawer();
         GFToast.showToast(text, context);
       },
       child: Padding(

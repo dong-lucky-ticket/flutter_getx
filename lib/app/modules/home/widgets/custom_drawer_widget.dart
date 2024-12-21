@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_getx/app/modules/home/widgets/custom_drawer_header_widget.dart';
 import 'package:flutter_getx/app/modules/home/widgets/custom_item_drawer_widget.dart';
 import 'package:flutter_getx/app/theme/app_colors.dart';
-import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 
-import '../home_controller.dart';
+const List<String> topics = [
+  '家庭账单',
+  '设置',
+  '使用帮助',
+  '意见反馈',
+  '关于',
+];
 
-class CustomDrawer extends GetView<HomeController> {
+class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
   @override
@@ -28,7 +33,7 @@ class CustomDrawer extends GetView<HomeController> {
                   ),
                   margin: const EdgeInsets.all(16),
                   child: ListView.separated(
-                    itemCount: controller.topics.length,
+                    itemCount: topics.length,
                     separatorBuilder: (context, index) => const Divider(
                       height: 2,
                       color: lightGrey,
@@ -37,7 +42,7 @@ class CustomDrawer extends GetView<HomeController> {
                     ),
                     itemBuilder: (c, i) {
                       return CustomItemDrawer(
-                        text: controller.topics[i],
+                        text: topics[i],
                         index: i,
                       );
                     },

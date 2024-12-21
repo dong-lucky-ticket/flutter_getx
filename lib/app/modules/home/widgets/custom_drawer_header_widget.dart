@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-
 class CustomDrawerHeaderWidget extends StatelessWidget {
   const CustomDrawerHeaderWidget({super.key});
 
@@ -17,7 +15,7 @@ class CustomDrawerHeaderWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 16),
-        Column(
+        const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -25,12 +23,12 @@ class CustomDrawerHeaderWidget extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Get.isDarkMode ? Colors.white : Colors.black)),
+                    color: Colors.black)),
             Text('攒钱的小码农',
                 style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: Get.isDarkMode ? Colors.white : Colors.black)),
+                    color: Colors.black)),
           ],
         )
       ]),
