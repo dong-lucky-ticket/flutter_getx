@@ -78,7 +78,10 @@ class _HomePageState extends State<HomePage> {
           itemCount: accountList.length,
           itemBuilder: (BuildContext context, int index) {
             return GFCard(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               content: GFListTile(
+                padding: const EdgeInsets.all(0),
+                margin: const EdgeInsets.all(0),
                 avatar: const GFAvatar(
                   backgroundImage:
                       AssetImage('assets/images/avatar_girl.png'),
