@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_getx/app/modules/create/create_page.dart';
 
 import 'package:flutter_getx/app/modules/home/widgets/custom_drawer_widget.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Get.toNamed('/add');
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatePage()));
           },
           child: const Icon(Icons.add),
         ),
