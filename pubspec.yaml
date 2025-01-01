@@ -5,7 +5,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: '>=3.2.6'
+  flutter: '>=3.16.0'
 
 dependencies:
   flutter:
@@ -14,7 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.19.0
   dio: ^5.7.0
-  tdesign_flutter: ^0.1.7
+  tdesign_flutter: ^0.1.8
 
 dev_dependencies:
   flutter_test:
