@@ -1,41 +1,78 @@
 import 'package:flutter/material.dart';
 
-// class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-class CustomAppBar extends StatefulWidget {
-  final Widget? leading;
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final double height;
+  final List<Widget>? actions;
 
-  const CustomAppBar({super.key, this.leading});
+  const CustomAppBar(
+      {super.key, required this.title, this.height = kToolbarHeight, this.actions});
 
-  @override
-  State<CustomAppBar> createState() => _CustomAppBarState();
-
-  // @override
-  // Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(kToolbarHeight),
+    final Color appBarColor = Theme.of(context).appBarTheme.backgroundColor ??
+        Theme.of(context).primaryColor;
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+    final bool canGoBack = Navigator.canPop(context); // 检测是否可以返回
+
+    return Material(
+      color: appBarColor, // 设置背景颜色
+      elevation: 4.0, // 添加底部阴影
+      shadowColor: Colors.black, // 阴影颜色
       child: Container(
-        // color: appBarTheme.backgroundColor ?? theme.colorScheme.surface,
-        // color: Colors.blue,
-        width: MediaQuery.of(context).size.width,
-        height: kToolbarHeight,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5), // 阴影颜色
-              spreadRadius: 5, // 扩展半径
-              blurRadius: 7, // 模糊半径
-              offset: const Offset(0, 4), // 水平和垂直方向的偏移量
+        height: height + statusBarHeight,
+        padding: EdgeInsets.only(top: statusBarHeight),
+        alignment: Alignment.center,
+        child: Stack(
+          children: [
+            if (canGoBack)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(Size(56, 48)),
+                  ),
+                  icon: Icon(Icons.arrow_back, color: Colors.white, size: 24.0),
+                  tooltip: MaterialLocalizations.of(context).backButtonTooltip, // 添加返回提示
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  splashRadius: 24.0, // 设置点击效果半径，与默认一致
+                ),
+              ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final double maxTitleWidth = constraints.maxWidth * 0.6; // 标题占最多 60% 的宽度
+                return Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: maxTitleWidth),
+                    child: Text(
+                      title,
+                      style: Theme.of(context).appBarTheme.titleTextStyle ??
+                          TextStyle(color: Colors.white, fontSize: 18),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis, // 超出部分显示省略号
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                );
+              },
             ),
+            // 右侧操作按钮
+            if (actions != null)
+              Align(
+                alignment: Alignment.centerRight,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: actions!,
+                ),
+              ),
           ],
         ),
-        child: widget.leading,
       ),
     );
   }
+
+  @override
+  Size get preferredSize => Size.fromHeight(height);
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_getx/app/modules/create/create_page.dart';
 
 import 'package:flutter_getx/app/modules/home/widgets/custom_drawer_widget.dart';
+import 'package:flutter_getx/app/modules/statistics/statistics_page.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../data/model/account.dart';
@@ -49,28 +50,52 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         key: _scaffoldKey,
         drawer: const CustomDrawer(),
-        appBar: TDNavBar(
-            useDefaultBack: false,
-            centerTitle: false,
-            titleMargin: 0,
-            titleWidget: GestureDetector(
-              onTap: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-              child: const TDImage(
-                assetUrl: 'assets/images/avatar_girl.png',
+        appBar: AppBar(
+          leading: InkWell(
+            onTap: () {
+              _scaffoldKey.currentState?.openDrawer();
+            },
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              child: Image.asset(
+                'assets/images/avatar_girl.png',
                 width: 32,
                 height: 32,
               ),
             ),
-            rightBarItems: [
-              TDNavBarItem(icon: TDIcons.home, iconSize: 24),
-              TDNavBarItem(icon: TDIcons.ellipsis, iconSize: 24)
-            ]),
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const StatisticsPage()));
+                },
+                icon: const Icon(Icons.bar_chart))
+          ],
+        ),
+        // appBar: TDNavBar(
+        //     useDefaultBack: false,
+        //     centerTitle: false,
+        //     titleMargin: 0,
+        //     titleWidget: GestureDetector(
+        //       onTap: () {
+        //         _scaffoldKey.currentState?.openDrawer();
+        //       },
+        //       child: const TDImage(
+        //         assetUrl: 'assets/images/avatar_girl.png',
+        //         width: 32,
+        //         height: 32,
+        //       ),
+        //     ),
+        //     rightBarItems: [
+        //       TDNavBarItem(icon: TDIcons.home, iconSize: 24),
+        //       TDNavBarItem(icon: TDIcons.ellipsis, iconSize: 24)
+        //     ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatePage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CreatePage()));
           },
           child: const Icon(Icons.add),
         ),
@@ -89,14 +114,14 @@ class _HomePageState extends State<HomePage> {
             itemCount: accountList.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 child: TDCell(
                     arrow: false,
                     title: accountList[index]?.recordDate,
                     rightIconWidget: Text(
-                      accountList[index]?.money.toString()??"",
-                    )
-                  ),
+                      accountList[index]?.money.toString() ?? "",
+                    )),
               );
               // return GFCard(
               //   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getx/app/modules/home/widgets/custom_app_bar.dart';
 
+import '../statistics/statistics_page.dart';
+
 class CreatePage extends StatefulWidget {
   const CreatePage({super.key});
 
@@ -13,13 +15,15 @@ class _CreatePageState extends State<CreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('新增'),
+        
+        title: const Text('新增1234'),
         centerTitle: true,
+        
       ),
       body: Column(
         children: [
           CustomAppBar(
-            leading: Icon(Icons.arrow_back)
+            title: 'Icon(Icons.arrow_back)Icon(Icons.arrow_back)'
           ),
           Text("data"),
         ],
