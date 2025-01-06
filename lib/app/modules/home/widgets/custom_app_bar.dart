@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+  final String? title;
   final double height;
+  final Widget? titleWidget;
   final List<Widget>? actions;
 
-  const CustomAppBar(
-      {super.key, required this.title, this.height = kToolbarHeight, this.actions});
+  const CustomAppBar({
+    super.key,
+    this.height = kToolbarHeight,
+    this.title,
+    this.actions,
+    this.titleWidget
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +34,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             if (canGoBack)
               Align(
                 alignment: Alignment.centerLeft,
-                child: IconButton(
-                  style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(Size(56, 48)),
+                child: Container(
+                  margin: const EdgeInsets.only(left: 4.0), // 左侧间距
+                  child: IconButton(
+                    padding: const EdgeInsets.all(12.0), // 去除默认内边距
+                    icon: const Icon(Icons.arrow_back, color: Colors.white, size: 24.0),
+                    tooltip: MaterialLocalizations.of(context).backButtonTooltip, // 添加返回提示
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    splashRadius: 24.0, // 设置点击效果半径，与默认一致
                   ),
-                  icon: Icon(Icons.arrow_back, color: Colors.white, size: 24.0),
-                  tooltip: MaterialLocalizations.of(context).backButtonTooltip, // 添加返回提示
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  splashRadius: 24.0, // 设置点击效果半径，与默认一致
                 ),
               ),
             LayoutBuilder(
@@ -46,10 +53,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 return Center(
                   child: ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: maxTitleWidth),
-                    child: Text(
-                      title,
+                    child: titleWidget ?? Text(
+                      title ?? '',
                       style: Theme.of(context).appBarTheme.titleTextStyle ??
-                          TextStyle(color: Colors.white, fontSize: 18),
+                          const TextStyle(color: Colors.white, fontSize: 18),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis, // 超出部分显示省略号
                       textAlign: TextAlign.center,
