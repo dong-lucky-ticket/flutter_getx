@@ -44,3 +44,8 @@ flutter:
     - assets/images/controller_counter.png
     - assets/images/page_counter.png
     - assets/images/avatar_girl.png
+
+  fonts:
+    - family: MyIconFont
+      fonts:
+        - asset: assets/fonts/iconfont.ttf
