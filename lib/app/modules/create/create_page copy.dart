@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class CreatePage extends StatefulWidget {
@@ -26,22 +28,22 @@ class _CreatePageState extends State<CreatePage> {
         body: TabBarView(
           children: [
             GridView.builder(
-          padding: const EdgeInsets.all(10.0),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, // 每行的列数
-            crossAxisSpacing: 10, // 列与列之间的间隔
-            mainAxisSpacing: 10, // 行与行之间的间隔
-          ),
-          itemCount: 100,
-          itemBuilder: (context, index) {
-            return Center(
-              child: Text(
-                'Item $index',
-                style: Theme.of(context).textTheme.headline5,
+              padding: const EdgeInsets.all(10.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, // 每行的列数
+                crossAxisSpacing: 10, // 列与列之间的间隔
+                mainAxisSpacing: 10, // 行与行之间的间隔
               ),
-            );
-          },
-        ),
+              itemCount: 100,
+              itemBuilder: (context, index) {
+                return Center(
+                  child: Text(
+                    'Item $index',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                );
+              },
+            ),
             Container(
               color: Colors.blue,
             ),

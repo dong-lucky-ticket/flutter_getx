@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_getx/app/modules/home/widgets/custom_app_bar.dart';
 import 'package:flutter_getx/app/widgets/font_icon.dart';
 
-import '../statistics/statistics_page.dart';
-
 class CreatePage extends StatefulWidget {
   const CreatePage({super.key});
 
@@ -22,6 +20,7 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    const typeValues = TypeIcons.values;
     return Scaffold(
       appBar: CustomAppBar(
           titleWidget: TabBar(
@@ -44,19 +43,24 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
           GridView.builder(
             padding: const EdgeInsets.all(10.0),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, // 每行的列数
+              crossAxisCount: 4, // 每行的列数
               crossAxisSpacing: 10, // 列与列之间的间隔
               mainAxisSpacing: 10, // 行与行之间的间隔
             ),
-            itemCount: 100,
+            itemCount: typeValues.length,
             itemBuilder: (context, index) {
-              return Center(
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.lightBlue,
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(FontIcon.accounting),
+                    Icon(typeValues[index].icon),
                     Text(
-                      'Item $index',
-                      style: Theme.of(context).textTheme.headline5,
+                      typeValues[index].title,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
                 ),
@@ -68,41 +72,6 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
           ),
         ],
       ),
-      // body: SizedBox(
-      //   width: MediaQuery.of(context).size.width,
-      //   height: MediaQuery.of(context).size.height,
-      //   child: Column(
-      //     children: [
-
-      //       Expanded(
-      //         child: TabBarView(
-      //           children: [
-      //             GridView.builder(
-      //           padding: const EdgeInsets.all(10.0),
-      //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      //             crossAxisCount: 3, // 每行的列数
-      //             crossAxisSpacing: 10, // 列与列之间的间隔
-      //             mainAxisSpacing: 10, // 行与行之间的间隔
-      //           ),
-      //           itemCount: 100,
-      //           itemBuilder: (context, index) {
-      //             return Center(
-      //               child: Text(
-      //                 'Item $index',
-      //                 style: Theme.of(context).textTheme.headline5,
-      //               ),
-      //             );
-      //           },
-      //         ),
-      //             Container(
-      //               color: Colors.blue,
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
@@ -123,7 +92,7 @@ class _CustomBoxPainter extends BoxPainter {
       ..style = PaintingStyle.fill;
 
     // 指示器宽度
-    final double indicatorHeight = 4.0;
+    const double indicatorHeight = 4.0;
     final double indicatorWidth = configuration.size!.width * 0.2;
 
     // 计算指示器的绘制位置
@@ -142,7 +111,7 @@ class _CustomBoxPainter extends BoxPainter {
     // 绘制圆角矩形作为指示器
     final RRect roundedRect = RRect.fromRectAndRadius(
       indicatorRect,
-      Radius.circular(4.0),
+      const Radius.circular(4.0),
     );
 
     canvas.drawRRect(roundedRect, paint);

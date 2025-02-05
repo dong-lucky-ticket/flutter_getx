@@ -212,193 +212,86 @@ class FontIcon {
 /// 图标名称枚举
 ///
 /// 这个枚举定义了所有的图标名称，你可以根据需要在其他地方使用这些枚举值。
-enum IconNames {
-  /// 保健品
-  healthProduct,
+enum TypeIcons {
+  healthProduct('保健品', FontIcon.healthProduct),
+  insurance('保险', FontIcon.insurance),
+  reimbursement('报销', FontIcon.reimbursement),
+  edit('编辑', FontIcon.edit),
+  salary('工资', FontIcon.salary),
+  recharge('充值', FontIcon.recharge),
+  mortgage('房贷', FontIcon.mortgage),
+  movie('电影', FontIcon.movie),
+  makeup('化妆', FontIcon.makeup),
+  taxi('出租车', FontIcon.taxi),
+  travel('差旅', FontIcon.travel),
+  publicWelfare('公益', FontIcon.publicWelfare),
+  pastry('糕点', FontIcon.pastry),
+  bus('公交', FontIcon.bus),
+  shopping('购物', FontIcon.shopping),
+  accounting('记账', FontIcon.accounting),
+  textbook('教材', FontIcon.textbook),
+  pet('宠物', FontIcon.pet),
+  respirator('呼吸器', FontIcon.respirator),
+  phoneBill('话费', FontIcon.phoneBill),
+  flightTicket('机票', FontIcon.flightTicket),
+  medicalTreatment('就医', FontIcon.medicalTreatment),
+  partTimeJob('兼职', FontIcon.partTimeJob),
+  tourism('旅游', FontIcon.tourism),
+  refueling('加油', FontIcon.refueling),
+  gift('礼物', FontIcon.gift),
+  maternalAndInfant('母婴', FontIcon.maternalAndInfant),
+  furniture('家具', FontIcon.furniture),
+  giftMoney('礼金', FontIcon.giftMoney),
+  train('火车', FontIcon.train),
+  financialManagement('理财', FontIcon.financialManagement),
+  wine('酒', FontIcon.wine),
+  householdAppliances('家电', FontIcon.householdAppliances),
+  life('生活', FontIcon.life),
+  trainingFee('培训费', FontIcon.trainingFee),
+  settings('设置', FontIcon.settings),
+  groceryShopping('买菜', FontIcon.groceryShopping),
+  hairdressing('美发', FontIcon.hairdressing),
+  utilities('水电', FontIcon.utilities),
+  snacks('零食', FontIcon.snacks),
+  digital('数码', FontIcon.digital),
+  other('其他', FontIcon.other),
+  details('明细', FontIcon.details),
+  creditCard('信用卡', FontIcon.creditCard),
+  concert('演唱会', FontIcon.concert),
+  tuition('学费', FontIcon.tuition),
+  massageHealthcare('推拿保健', FontIcon.massageHealthcare),
+  dining('用餐', FontIcon.dining),
+  drinks('饮品', FontIcon.drinks),
+  breakfast('早餐', FontIcon.breakfast),
+  clothes('衣服', FontIcon.clothes),
+  statistics('统计', FontIcon.statistics),
+  transfer('转账', FontIcon.transfer),
+  fruits('水果', FontIcon.fruits),
+  flowers('鲜花', FontIcon.flowers),
+  stationery('文具', FontIcon.stationery),
+  decoration('装修', FontIcon.decoration),
+  physicalExamination('体检', FontIcon.physicalExamination),
+  parkingFee('停车费', FontIcon.parkingFee),
+  game('游戏', FontIcon.game),
+  sports('运动', FontIcon.sports),
+  midnightSnack('宵夜', FontIcon.midnightSnack),
+  medicine('药', FontIcon.medicine);
 
-  /// 保险
-  insurance,
+  const TypeIcons(this.title, this.icon);
 
-  /// 报销
-  reimbursement,
+  final String title;
 
-  /// 编辑
-  edit,
+  final IconData icon;
 
-  /// 工资
-  salary,
+  static TypeIcons getTypeByTitle(String title) =>
+      TypeIcons.values.firstWhere((activity) => activity.name == title);
 
-  /// 充值
-  recharge,
+  static TypeIcons getType(String title) =>
+      TypeIcons.values.firstWhere((activity) => activity.title == title);
 
-  /// 房贷
-  mortgage,
+  static IconData getIconByTitle(String title) =>
+      TypeIcons.values.firstWhere((activity) => activity.title == title).icon;
 
-  /// 电影
-  movie,
-
-  /// 化妆
-  makeup,
-
-  /// 出租车
-  taxi,
-
-  /// 差旅
-  travel,
-
-  /// 公益
-  publicWelfare,
-
-  /// 糕点
-  pastry,
-
-  /// 公交
-  bus,
-
-  /// 购物
-  shopping,
-
-  /// 记账
-  accounting,
-
-  /// 教材
-  textbook,
-
-  /// 宠物
-  pet,
-
-  /// 呼吸器
-  respirator,
-
-  /// 话费
-  phoneBill,
-
-  /// 机票
-  flightTicket,
-
-  /// 就医
-  medicalTreatment,
-
-  /// 兼职
-  partTimeJob,
-
-  /// 旅游
-  tourism,
-
-  /// 加油
-  refueling,
-
-  /// 礼物
-  gift,
-
-  /// 母婴
-  maternalAndInfant,
-
-  /// 家具
-  furniture,
-
-  /// 礼金
-  giftMoney,
-
-  /// 火车
-  train,
-
-  /// 理财
-  financialManagement,
-
-  /// 酒
-  wine,
-
-  /// 家电
-  householdAppliances,
-
-  /// 生活
-  life,
-
-  /// 培训费
-  trainingFee,
-
-  /// 设置
-  settings,
-
-  /// 买菜
-  groceryShopping,
-
-  /// 美发
-  hairdressing,
-
-  /// 水电
-  utilities,
-
-  /// 零食
-  snacks,
-
-  /// 数码
-  digital,
-
-  /// 其他
-  other,
-
-  /// 明细
-  details,
-
-  /// 信用卡
-  creditCard,
-
-  /// 演唱会
-  concert,
-
-  /// 学费
-  tuition,
-
-  /// 推拿保健
-  massageHealthcare,
-
-  /// 用餐
-  dining,
-
-  /// 饮品
-  drinks,
-
-  /// 早餐
-  breakfast,
-
-  /// 衣服
-  clothes,
-
-  /// 统计
-  statistics,
-
-  /// 转账
-  transfer,
-
-  /// 水果
-  fruits,
-
-  /// 鲜花
-  flowers,
-
-  /// 文具
-  stationery,
-
-  /// 装修
-  decoration,
-
-  /// 体检
-  physicalExamination,
-
-  /// 停车费
-  parkingFee,
-
-  /// 游戏
-  game,
-
-  /// 运动
-  sports,
-
-  /// 宵夜
-  midnightSnack,
-
-  /// 药
-  medicine,
+  static IconData getIconByType(TypeIcons type) =>
+      TypeIcons.values.firstWhere((activity) => activity == type).icon;
 }

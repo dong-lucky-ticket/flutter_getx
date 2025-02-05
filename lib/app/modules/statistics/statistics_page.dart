@@ -11,11 +11,11 @@ class StatisticsPage extends StatefulWidget {
 class _StatisticsPageState extends State<StatisticsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: CustomAppBar(
         title: 'Statistics',
       ),
-      body: const Center(
+      body: Center(
         child: Text('Statistics Page'),
       )
     );
