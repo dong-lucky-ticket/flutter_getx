@@ -7,6 +7,7 @@ import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../data/model/account.dart';
 import '../../data/provider/account.dart';
+import '../expense_entry/expense_entry.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -94,8 +95,10 @@ class _HomePageState extends State<HomePage> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => const CreatePage()));
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const CreatePage()));
+                MaterialPageRoute(builder: (context) => const ExpenseEntryPage()));
           },
           child: const Icon(Icons.add),
         ),
