@@ -15,6 +15,7 @@ class _ExpenseEntryPageState extends State<ExpenseEntryPage> {
   String? _selectedCategory;
   bool _showDetails = false;
 
+  // 扩展后的分类列表
   final List<Map<String, dynamic>> categories = [
     {'name': '餐饮', 'icon': Icons.restaurant, 'color': Colors.red},
     {'name': '交通', 'icon': Icons.directions_car, 'color': Colors.blue},
@@ -41,7 +42,9 @@ class _ExpenseEntryPageState extends State<ExpenseEntryPage> {
     {'name': '烟酒', 'icon': Icons.local_bar, 'color': Colors.brown},
     {'name': '维修保养', 'icon': Icons.build, 'color': Colors.grey},
   ];
-  
+
+  final ScrollController _scrollController = ScrollController();
+
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       // 这里处理表单提交
@@ -50,19 +53,45 @@ class _ExpenseEntryPageState extends State<ExpenseEntryPage> {
         金额: ${_amountController.text}
         说明: ${_descController.text}
       ''');
-      
+
       // 提交后重置表单
       _formKey.currentState!.reset();
       setState(() => _showDetails = false);
     }
   }
 
+  // 为每个分类项创建独立的GlobalKey
+  final List<GlobalKey> _categoryKeys = List.generate(24, (index) => GlobalKey());
+
+  void _onCategorySelected(String category, int index) {
+    setState(() {
+      _selectedCategory = category;
+      _showDetails = true;
+    });
+
+    // 精准滚动到选中项
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final context = _categoryKeys[index].currentContext;
+      if (context != null) {
+        Scrollable.ensureVisible(
+          context,
+          alignment: 0.3,  // 控制项在可视区域的位置（0=顶部，1=底部）
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
   @override
   void dispose() {
     _amountController.dispose();
     _descController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +113,7 @@ class _ExpenseEntryPageState extends State<ExpenseEntryPage> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: GridView.builder(
+                controller: _scrollController,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 1.2,
@@ -94,16 +124,12 @@ class _ExpenseEntryPageState extends State<ExpenseEntryPage> {
                 itemBuilder: (context, index) {
                   final category = categories[index];
                   return _CategoryItem(
+                    key: _categoryKeys[index],  // 绑定唯一key
                     icon: category['icon'] as IconData,
                     color: category['color'] as Color,
                     name: category['name'] as String,
                     isSelected: _selectedCategory == category['name'],
-                    onTap: () {
-                      setState(() {
-                        _selectedCategory = category['name'];
-                        _showDetails = true;
-                      });
-                    },
+                    onTap: () => _onCategorySelected(category['name'], index),
                   );
                 },
               ),
@@ -143,7 +169,8 @@ class _CategoryItem extends StatelessWidget {
     required this.name,
     required this.isSelected,
     required this.onTap,
-  });
+    required Key key,  // 添加key参数
+  }): super(key: key);
 
   @override
   Widget build(BuildContext context) {
