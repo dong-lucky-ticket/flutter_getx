@@ -10,45 +10,86 @@ class CreatePage extends StatefulWidget {
 }
 
 class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
+  final _formKey = GlobalKey<FormState>();
+  final _amountController = TextEditingController();
+  final _descController = TextEditingController();
+
   late TabController controller;
+  late final List<TypeIcons>  typeValues;
+  late final List<GlobalKey> _categoryKeys;
 
   @override
   void initState() {
     controller = TabController(length: 2, vsync: this);
+    typeValues = TypeIcons.values;
+_categoryKeys = typeValues.map((e) => GlobalKey()).toList();
     super.initState();
   }
 
-  TypeIcons? activeTypeIcons;
+  TypeIcons? _activeTypeIcons;
+ 
 
   bool isBillDetailsVisible = false;
 
+  void _onCategorySelected(TypeIcons category, int index) {
+    setState(() {
+      _activeTypeIcons = category;
+      isBillDetailsVisible = true;
+    });
+    // 精准滚动到选中项
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final context = _categoryKeys[index].currentContext;
+      if (context != null) {
+        Scrollable.ensureVisible(
+          context,
+          alignment: 1, // 控制项在可视区域的位置（0=顶部，1=底部
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      } 
+    });
+  }
+
+  void _submitForm() {}
+
+
   @override
   Widget build(BuildContext context) {
-    const typeValues = TypeIcons.values;
     return Scaffold(
-        appBar: CustomAppBar(
-            titleWidget: TabBar(
+      appBar: CustomAppBar(
+        titleWidget: TabBar(
           isScrollable: true,
-          // indicator: CustomTabIndicator(),
           indicatorSize: TabBarIndicatorSize.label,
           controller: controller,
-          tabs: const [
-            Tab(
-              text: '收入',
-            ),
-            Tab(
-              text: '支出',
+          tabs: const [Tab(text: '收入'), Tab(text: '支出')],
+        ),
+        actions: [
+          if (isBillDetailsVisible)
+            IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: () => setState(() => isBillDetailsVisible = false),
             )
-          ],
-        )),
-        body: Column(
-          children: [
-            Expanded(
-              child: TabBarView(
-                controller: controller,
-                children: [
-                  GridView.builder(
-                    padding: const EdgeInsets.all(10.0),
+        ],
+      ),
+      // appBar: AppBar(
+      //   title: Text('category.title'),
+      //   actions: [
+      //     if (isBillDetailsVisible)
+      //       IconButton(
+      //         icon: const Icon(Icons.close),
+      //         onPressed: () => setState(() => isBillDetailsVisible = false),
+      //       )
+      //   ],
+      // ),
+      body: Column(
+        children: [
+          Expanded(
+            child: TabBarView(
+              controller: controller,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 5, // 每行的列数
@@ -57,81 +98,175 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
                     ),
                     itemCount: typeValues.length,
                     itemBuilder: (context, index) {
-                      return Scrollable(
-                        viewportBuilder: (context, position) => InkWell(
-                          onTap: () {
-                            setState(() {
-                              activeTypeIcons = typeValues[index];
-                              isBillDetailsVisible = true;
-                            });
-                            // Ensure the tapped icon is visible
-                            Scrollable.ensureVisible(
-                              context,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                          },
-                          borderRadius: BorderRadius.circular(16),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: activeTypeIcons == typeValues[index]
-                                  ? Colors.lightBlueAccent
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(typeValues[index].icon),
-                                Text(
-                                  typeValues[index].title,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      final typeValue = typeValues[index];
+
+                      return _CategoryItem(
+                        key: _categoryKeys[index],
+                        icon: typeValue.icon,
+                        name: typeValue.title,
+                        color: Colors.blue,
+                        isSelected: typeValue == _activeTypeIcons,
+                        onTap: () => _onCategorySelected(typeValue, index)
                       );
-                    },
-                  ),
-                  Container(
-                    color: Colors.blue,
-                  ),
-                ],
-              ),
-            ),
-            if (isBillDetailsVisible)
-              AnimatedOpacity(
-                opacity: isBillDetailsVisible ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 300),
-                child: Container(
-                  color: Colors.black.withOpacity(0.5), // 半透明背景
-                  child: Center(
-                    child: Container(
-                      height: 300, // 模态框的高度
-                      width: 300, // 模态框的宽度
-                      color: Colors.white,
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text('这是一个从底部弹出的模态框'),
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  isBillDetailsVisible = false;
-                                });
-                              },
-                              child: Text('关闭'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    }
                   ),
                 ),
-              ),
+                Container(
+                  color: Colors.blue,
+                ),
+              ],
+            ),
+          ),
+          // 详细信息输入面板
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: isBillDetailsVisible
+                ? _DetailInputPanel(
+                    formKey: _formKey,
+                    category: _activeTypeIcons!,
+                    amountController: _amountController,
+                    descController: _descController,
+                    onSubmit: _submitForm,
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
+      ),
+    );
+  }
+  
+}
+
+class _CategoryItem extends StatelessWidget {
+  final IconData icon;
+  final String name;
+  final Color color;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _CategoryItem({
+    required this.icon,
+    required this.name,
+    required this.color,
+    required this.isSelected,
+    required this.onTap,
+    required Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: isSelected ? color.withOpacity(0.2) : Colors.transparent,
+          border: Border.all(
+            color: isSelected ? color : Colors.grey.shade300,
+            width: isSelected ? 2 : 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 24, color: color),
+            const SizedBox(height: 4),
+            Text(name, style: TextStyle(color: Colors.grey.shade800)),
           ],
-        ));
+        ),
+      ),
+    );
+  }
+}
+
+
+class _DetailInputPanel extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+  final TypeIcons category;
+  final TextEditingController amountController;
+  final TextEditingController descController;
+  final VoidCallback onSubmit;
+
+  const _DetailInputPanel({
+    required this.formKey,
+    required this.category,
+    required this.amountController,
+    required this.descController,
+    required this.onSubmit,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, -5),
+          ),
+        ],
+      ),
+      child: Form(
+        key: formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              category.title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: amountController,
+              decoration: const InputDecoration(
+                labelText: '金额',
+                prefixIcon: Icon(Icons.attach_money),
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '请输入金额';
+                }
+                if (double.tryParse(value) == null) {
+                  return '请输入有效数字';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: descController,
+              decoration: const InputDecoration(
+                labelText: '备注说明',
+                prefixIcon: Icon(Icons.description),
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 2,
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.check),
+                label: const Text('确认保存'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                onPressed: onSubmit,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

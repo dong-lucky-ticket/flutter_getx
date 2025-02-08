@@ -68,51 +68,28 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const StatisticsPage()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => const StatisticsPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CreatePage()));
                 },
                 icon: const Icon(Icons.bar_chart))
           ],
         ),
-        // appBar: TDNavBar(
-        //     useDefaultBack: false,
-        //     centerTitle: false,
-        //     titleMargin: 0,
-        //     titleWidget: GestureDetector(
-        //       onTap: () {
-        //         _scaffoldKey.currentState?.openDrawer();
-        //       },
-        //       child: const TDImage(
-        //         assetUrl: 'assets/images/avatar_girl.png',
-        //         width: 32,
-        //         height: 32,
-        //       ),
-        //     ),
-        //     rightBarItems: [
-        //       TDNavBarItem(icon: TDIcons.home, iconSize: 24),
-        //       TDNavBarItem(icon: TDIcons.ellipsis, iconSize: 24)
-        //     ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // Navigator.push(context,
             //     MaterialPageRoute(builder: (context) => const CreatePage()));
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ExpenseEntryPage()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ExpenseEntryPage()));
           },
           child: const Icon(Icons.add),
         ),
-        // body: TDCellGroup(
-        //    cells: [
-        //     TDCell(arrow: true, title: '单行标题'),
-        //     TDCell(arrow: true, title: '单行标题', required: true),
-        //     TDCell(arrow: true, title: '单行标题', noteWidget: TDBadge(TDBadgeType.message, count: '8')),
-        //     TDCell(arrow: false, title: '单行标题', rightIconWidget: TDSwitch(isOn: true)),
-        //     TDCell(arrow: true, title: '单行标题', note: '辅助信息'),
-        //     TDCell(arrow: true, title: '单行标题', leftIcon: TDIcons.lock_on),
-        //     TDCell(arrow: false, title: '单行标题'),
-        //   ],
-        // ),
         body: ListView.builder(
             itemCount: accountList.length,
             itemBuilder: (BuildContext context, int index) {
@@ -126,20 +103,6 @@ class _HomePageState extends State<HomePage> {
                       accountList[index]?.money.toString() ?? "",
                     )),
               );
-              // return GFCard(
-              //   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-              //   content: GFListTile(
-              //     padding: const EdgeInsets.all(0),
-              //     margin: const EdgeInsets.all(0),
-              //     avatar: const GFAvatar(
-              //       backgroundImage:
-              //           AssetImage('assets/images/avatar_girl.png'),
-              //     ),
-              //     titleText: accountList[index]?.recordDate,
-              //     subTitleText:
-              //         accountList[index]?.money.toString(),
-              //     icon: const Icon(Icons.favorite)),
-              // );
             }));
   }
 }
