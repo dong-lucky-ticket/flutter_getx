@@ -67,21 +67,23 @@ class RadioFormFieldState<T> extends State<RadioFormField<T>> {
                 style: const TextStyle(fontSize: 16),
               ),
             Row(
-                children: widget.items.map((item) {
-              return Row(
-                children: [
-                  Radio<T>(
-                    value: item.value,
-                    groupValue: _controller.value,
-                    onChanged: (T? value) {
-                      _controller.value = value; // 更新 Controller 的值
-                      state.didChange(value); // 更新 FormField 的状态
-                    },
-                  ),
-                  Text(item.label),
-                ],
-              );
-            }).toList()),
+                children: widget.items.map(
+              (item) {
+                return Row(
+                  children: [
+                    Radio<T>(
+                      value: item.value,
+                      groupValue: _controller.value,
+                      onChanged: (T? value) {
+                        _controller.value = value; // 更新 Controller 的值
+                        state.didChange(value); // 更新 FormField 的状态
+                      },
+                    ),
+                    Text(item.label),
+                  ],
+                );
+              },
+            ).toList()),
             if (state.hasError)
               Text(
                 state.errorText!,

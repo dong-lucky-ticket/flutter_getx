@@ -97,7 +97,10 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
           if (isBillDetailsVisible)
             IconButton(
               icon: const Icon(Icons.close, color: Colors.white),
-              onPressed: () => setState(() => isBillDetailsVisible = false),
+              onPressed: () {
+                _formKey.currentState!.reset();
+                // setState(() => isBillDetailsVisible = false);
+              },
             )
         ],
       ),
@@ -265,12 +268,6 @@ class _DetailInputPanel extends StatelessWidget {
                   return '请输入有效数字';
                 }
                 return null;
-              },
-              onChanged: (value) {
-                // 每次输入变化时调用validator
-                if (formKey.currentState != null) {
-                  formKey.currentState!.validate();
-                }
               },
             ),
             const SizedBox(height: 16),
