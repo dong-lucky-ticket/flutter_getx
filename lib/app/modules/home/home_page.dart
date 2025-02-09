@@ -67,15 +67,18 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             IconButton(
-                onPressed: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => const StatisticsPage()));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CreatePage()));
-                },
-                icon: const Icon(Icons.bar_chart))
+              onPressed: () {
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (context) => const StatisticsPage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ExpenseEntryPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.bar_chart),
+            )
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -84,9 +87,11 @@ class _HomePageState extends State<HomePage> {
             // Navigator.push(context,
             //     MaterialPageRoute(builder: (context) => const CreatePage()));
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ExpenseEntryPage()));
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CreatePage(),
+              ),
+            );
           },
           child: const Icon(Icons.add),
         ),
