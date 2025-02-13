@@ -85,6 +85,9 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final formHeight = _formKey.currentContext?.size?.height ?? 0; // 表单的高度
+    var formWrapperPadding = 16; // 表单的内边距
+    debugPrint( '${formHeight + formWrapperPadding * 2}');
     return Scaffold(
       appBar: CustomAppBar(
         titleWidget: TabBar(
@@ -99,7 +102,7 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
               icon: const Icon(Icons.close, color: Colors.white),
               onPressed: () {
                 _formKey.currentState!.reset();
-                // setState(() => isBillDetailsVisible = false);
+                setState(() => isBillDetailsVisible = false);
               },
             )
         ],
@@ -113,6 +116,7 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: GridView.builder(
+                      cacheExtent: formHeight + formWrapperPadding * 2,
                       controller: _scrollController,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
