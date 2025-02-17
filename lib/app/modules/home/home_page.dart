@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     getList();
-    getDetail();
+    // getDetail();
     super.initState();
   }
 

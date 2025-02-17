@@ -11,9 +11,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   cupertino_icons: ^1.0.2
-  intl: ^0.19.0
+  intl: any
   dio: ^5.7.0
   tdesign_flutter: ^0.1.8
 

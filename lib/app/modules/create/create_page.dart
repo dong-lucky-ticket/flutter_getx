@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getx/app/modules/home/widgets/custom_app_bar.dart';
+import 'package:flutter_getx/app/widgets/date_picker_form_field.dart';
 import 'package:flutter_getx/app/widgets/font_icon.dart';
-import 'package:flutter_getx/app/widgets/radio_form_field.dart';
 import 'package:flutter_getx/app/widgets/select_form_field.dart';
 
 class CreatePage extends StatefulWidget {
@@ -15,8 +15,8 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
   final _descController = TextEditingController();
+  final _dateController = TextEditingController();
   final _selectedController = SelectFormFieldController();
-  final _radioController = RadioFormFieldController();
 
   final _scrollController = ScrollController();
 
@@ -73,21 +73,19 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
         分类: ${_activeTypeIcons!.title}
         金额: ${_amountController.text}
         渠道: ${_selectedController.value}
-        类型: ${_radioController.value}
         说明: ${_descController.text}
       ''');
 
       // 提交后重置表单
       _formKey.currentState!.reset();
-      setState(() => isBillDetailsVisible = false);
+      _selectedController.value = null;
+
+      // setState(() => isBillDetailsVisible = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final formHeight = _formKey.currentContext?.size?.height ?? 0; // 表单的高度
-    var formWrapperPadding = 16; // 表单的内边距
-    debugPrint( '${formHeight + formWrapperPadding * 2}');
     return Scaffold(
       appBar: CustomAppBar(
         titleWidget: TabBar(
@@ -102,7 +100,8 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
               icon: const Icon(Icons.close, color: Colors.white),
               onPressed: () {
                 _formKey.currentState!.reset();
-                setState(() => isBillDetailsVisible = false);
+                _selectedController.value = null;
+                // setState(() => isBillDetailsVisible = false);
               },
             )
         ],
@@ -116,7 +115,7 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: GridView.builder(
-                      cacheExtent: formHeight + formWrapperPadding * 2,
+                      cacheExtent: 500,
                       controller: _scrollController,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -152,9 +151,9 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
                     formKey: _formKey,
                     category: _activeTypeIcons!,
                     amountController: _amountController,
+                    dateController: _dateController,
                     descController: _descController,
                     selectController: _selectedController,
-                    radioController: _radioController,
                     onSubmit: _submitForm,
                   )
                 : const SizedBox.shrink(),
@@ -212,9 +211,9 @@ class _DetailInputPanel extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TypeIcons category;
   final TextEditingController amountController;
+  final TextEditingController dateController;
   final TextEditingController descController;
   final SelectFormFieldController selectController;
-  final RadioFormFieldController radioController;
   final VoidCallback onSubmit;
 
   const _DetailInputPanel({
@@ -224,7 +223,7 @@ class _DetailInputPanel extends StatelessWidget {
     required this.descController,
     required this.onSubmit,
     required this.selectController,
-    required this.radioController,
+    required this.dateController,
   });
 
   @override
@@ -275,6 +274,17 @@ class _DetailInputPanel extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
+            DatePickerFormField(
+              controller: dateController,
+              labelText: '日期',
+              firstDate: DateTime(2020),
+              lastDate: DateTime(2030),
+              initialDate: DateTime.now(),
+              onDateSelected: (date) {
+                debugPrint(date.toString());
+              },
+            ),
+            const SizedBox(height: 16),
             TextFormField(
               controller: descController,
               decoration: const InputDecoration(
@@ -287,21 +297,15 @@ class _DetailInputPanel extends StatelessWidget {
             const SizedBox(height: 16),
             SelectFormField(
                 controller: selectController,
-                labelText: '收支渠道',
-                hintText: '收支渠道',
+                labelText: '网购',
+                hintText: '网购',
                 items: [
-                  SelectOption(value: 1, label: '线下'),
-                  SelectOption(value: 2, label: '京东'),
-                  SelectOption(value: 3, label: '淘宝'),
-                  SelectOption(value: 4, label: '拼多多'),
-                  SelectOption(value: 4, label: '抖音'),
+                  SelectOption(value: 'jd', label: '京东'),
+                  SelectOption(value: 'tb', label: '淘宝'),
+                  SelectOption(value: 'pdd', label: '拼多多'),
+                  SelectOption(value: 'dy', label: '抖音'),
+                  SelectOption(value: 'other', label: '其它'),
                 ]),
-            const SizedBox(height: 16),
-            RadioFormField(controller: radioController, items: [
-              RadioOption(value: 1, label: '线下'),
-              RadioOption(value: 2, label: '京东'),
-              RadioOption(value: 3, label: '淘宝'),
-            ]),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
