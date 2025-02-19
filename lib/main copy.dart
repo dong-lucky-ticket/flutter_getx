@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_getx/app/widgets/radio_form_field.dart';
+// import 'package:flutter_getx/app/widgets/radio_form_field.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,8 +36,7 @@ class _CustomFormDemoState extends State<CustomFormDemo> {
   }
 
   void _resetForm() {
-    // _formKey.currentState!.reset(); // 触发所有FormField的reset方法
-    _selectController.value = null;
+    _formKey.currentState!.reset(); // 触发所有FormField的reset方法
   }
 
   @override
@@ -67,7 +68,7 @@ class _CustomFormDemoState extends State<CustomFormDemo> {
                 RadioOption(value: 'Other', label: 'Other'),
               ],
               validator: (value) => value == null ? 'Required' : null,
-              // initialValue: 'Male',
+              initialValue: 'Male',
             ),
             SizedBox(height: 20),
             ElevatedButton(onPressed: _submitForm, child: Text('Submit')),
@@ -137,6 +138,7 @@ class _SelectFormFieldState<T> extends FormFieldState<T> {
   @override
   void reset() {
     super.reset(); // 关键点：调用父类reset方法恢复初始值
+    print(widget.initialValue);
     _controller?.value = widget.initialValue;
   }
 
@@ -172,7 +174,7 @@ class _SelectFormField<T> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownButtonFormField<T>(
-          value: controller?.value ?? state.value,
+          value: state.value, // 关键点：绑定到FormField的value
           decoration: InputDecoration(
             labelText: labelText,
             errorText: state.errorText,
@@ -184,7 +186,7 @@ class _SelectFormField<T> extends StatelessWidget {
                   ))
               .toList(),
           onChanged: (value) {
-            state.didChange(value);
+            state.didChange(value); // 关键点：通过FormField更新值
           },
         ),
       ],
@@ -192,121 +194,18 @@ class _SelectFormField<T> extends StatelessWidget {
   }
 }
 
-// 修复后的 RadioFormField 
-class RadioFormField<T> extends FormField<T> {
-  final RadioFormFieldController<T>? controller;
-  final String? labelText;
-  final List<RadioOption<T>> items;
-
-  RadioFormField({
-    Key? key,
-    this.controller,
-    this.labelText,
-    required this.items,
-    FormFieldValidator<T>? validator,
-    T? initialValue,
-  }) : super(
-          key: key,
-          validator: validator,
-          initialValue: initialValue,
-          builder: (FormFieldState<T> state) {
-            return _RadioFormField(
-              state: state,
-              labelText: labelText,
-              items: items,
-              controller: controller,
-            );
-          },
-        );
-
-  @override
-  FormFieldState<T> createState() => _RadioFormFieldState<T>();
-}
-
-class _RadioFormFieldState<T> extends FormFieldState<T> {
-  RadioFormFieldController<T>? _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = (widget as RadioFormField<T>).controller;
-    _controller?.addListener(_handleControllerChange);
-  }
-
-  @override
-  void didChange(T? value) {
-    super.didChange(value);
-    _controller?.value = value;
-  }
-
-  @override
-  void reset() {
-    super.reset(); // 关键点
-    _controller?.value = widget.initialValue;
-  }
-
-  void _handleControllerChange() {
-    if (_controller?.value != value) {
-      didChange(_controller?.value);
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller?.removeListener(_handleControllerChange);
-    super.dispose();
-  }
-}
-
-class _RadioFormField<T> extends StatelessWidget {
-  final FormFieldState<T> state;
-  final String? labelText;
-  final List<RadioOption<T>> items;
-  final RadioFormFieldController<T>? controller;
-
-  const _RadioFormField({
-    required this.state,
-    this.labelText,
-    required this.items,
-    this.controller,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (labelText != null) Text(labelText!),
-        ...items.map((option) => Row(
-          children: [
-            Radio<T>(
-              value: option.value,
-              groupValue: controller?.value ?? state.value,
-              onChanged: (value) => state.didChange(value),
-            ),
-            Text(option.label),
-          ],
-        )),
-        if (state.hasError) 
-          Text(state.errorText!, style: TextStyle(color: Colors.red)),
-      ],
-    );
-  }
-}
-
 // Controller基类
-abstract class FormFieldController<T> extends ChangeNotifier {
-  T? _value;
-  T? get value => _value;
-  set value(T? newValue) {
-    if (_value == newValue) return;
-    _value = newValue;
-    notifyListeners();
-  }
-}
+// abstract class FormFieldController<T> extends ChangeNotifier {
+//   T? _value;
+//   T? get value => _value;
+//   set value(T? newValue) {
+//     if (_value == newValue) return;
+//     _value = newValue;
+//     notifyListeners();
+//   }
+// }
 
 class SelectFormFieldController<T> extends FormFieldController<T> {}
-class RadioFormFieldController<T> extends FormFieldController<T> {}
 
 // 选项类
 class SelectOption<T> {
@@ -315,8 +214,3 @@ class SelectOption<T> {
   SelectOption({required this.value, required this.label});
 }
 
-class RadioOption<T> {
-  final T value;
-  final String label;
-  RadioOption({required this.value, required this.label});
-}

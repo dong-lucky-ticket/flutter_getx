@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_getx/app/modules/home/widgets/custom_app_bar.dart';
 import 'package:flutter_getx/app/widgets/date_picker_form_field.dart';
 import 'package:flutter_getx/app/widgets/font_icon.dart';
+import 'package:flutter_getx/app/widgets/radio_form_field.dart';
 import 'package:flutter_getx/app/widgets/select_form_field.dart';
 
 class CreatePage extends StatefulWidget {
@@ -295,17 +296,23 @@ class _DetailInputPanel extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            SelectFormField(
-                controller: selectController,
-                labelText: '网购',
-                hintText: '网购',
-                items: [
-                  SelectOption(value: 'jd', label: '京东'),
-                  SelectOption(value: 'tb', label: '淘宝'),
-                  SelectOption(value: 'pdd', label: '拼多多'),
-                  SelectOption(value: 'dy', label: '抖音'),
-                  SelectOption(value: 'other', label: '其它'),
-                ]),
+            RadioFormField(items: [
+                RadioOption(value: 'jd', label: '京东'),
+                RadioOption(value: 'tb', label: '淘宝'),
+                RadioOption(value: 'pdd', label: '拼多多'),
+            ]), 
+            // SelectFormField(
+            //   controller: selectController,
+            //   labelText: '网购',
+            //   hintText: '网购',
+            //   items: [
+            //     SelectOption(value: 'jd', label: '京东'),
+            //     SelectOption(value: 'tb', label: '淘宝'),
+            //     SelectOption(value: 'pdd', label: '拼多多'),
+            //     SelectOption(value: 'dy', label: '抖音'),
+            //     SelectOption(value: 'other', label: '其它'),
+            //   ],
+            // ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
