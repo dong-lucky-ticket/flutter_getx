@@ -16,7 +16,7 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
   final _descController = TextEditingController();
-  final _dateController = TextEditingController();
+  final _dateController = TextEditingController(text: formatDate(DateTime.now()));
   final _selectedController = SelectFormFieldController();
 
   final _scrollController = ScrollController();
@@ -281,9 +281,6 @@ class _DetailInputPanel extends StatelessWidget {
               firstDate: DateTime(2020),
               lastDate: DateTime(2030),
               initialDate: DateTime.now(),
-              onDateSelected: (date) {
-                debugPrint(date.toString());
-              },
             ),
             const SizedBox(height: 16),
             TextFormField(
@@ -296,23 +293,18 @@ class _DetailInputPanel extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            RadioFormField(items: [
-                RadioOption(value: 'jd', label: '京东'),
-                RadioOption(value: 'tb', label: '淘宝'),
-                RadioOption(value: 'pdd', label: '拼多多'),
-            ]), 
-            // SelectFormField(
-            //   controller: selectController,
-            //   labelText: '网购',
-            //   hintText: '网购',
-            //   items: [
-            //     SelectOption(value: 'jd', label: '京东'),
-            //     SelectOption(value: 'tb', label: '淘宝'),
-            //     SelectOption(value: 'pdd', label: '拼多多'),
-            //     SelectOption(value: 'dy', label: '抖音'),
-            //     SelectOption(value: 'other', label: '其它'),
-            //   ],
-            // ),
+            SelectFormField(
+              controller: selectController,
+              labelText: '网购',
+              hintText: '网购',
+              items: [
+                SelectOption(value: 'jd', label: '京东'),
+                SelectOption(value: 'tb', label: '淘宝'),
+                SelectOption(value: 'pdd', label: '拼多多'),
+                SelectOption(value: 'dy', label: '抖音'),
+                SelectOption(value: 'other', label: '其它'),
+              ],
+            ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,

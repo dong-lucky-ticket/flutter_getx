@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 // 参考TextFormField.dart
 
 class DatePickerFormField extends FormField<String> {
-  // final DatePickerFormFieldController<T>? controller;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
   // final String? labelText;
   // final DateTime? initialDate; // 初始日期
   // final DateTime? firstDate; // 可选的最早日期
@@ -11,10 +12,11 @@ class DatePickerFormField extends FormField<String> {
 
   DatePickerFormField({
     Key? key,
+    this.controller,
+    this.onChanged,
     DateTime? initialDate,
     DateTime? firstDate,
     DateTime? lastDate,
-    TextEditingController? controller,
     String? labelText,
     String? initialValue,
   }) : super(
@@ -39,40 +41,52 @@ class DatePickerFormField extends FormField<String> {
 class _DatePickerFormFieldState extends FormFieldState<String> {
   TextEditingController? _controller;
 
+  TextEditingController get _effectiveController =>
+      _datePickerFormField.controller ?? _controller!;
+
+  DatePickerFormField get _datePickerFormField =>
+      super.widget as DatePickerFormField;
+
   @override
   void initState() {
     super.initState();
-    _controller = (widget as DatePickerFormField<T>).controller;
-    _controller?.addListener(_handleControllerChange);
+    if (_datePickerFormField.controller == null) {
+      _controller = TextEditingController(text: widget.initialValue);
+    } else {
+      _datePickerFormField.controller!.addListener(_handleControllerChanged);
+    }
   }
 
   @override
-  void didChange(T? value) {
+  void didChange(String? value) {
     super.didChange(value);
-    _controller?.value = value;
+    if (_effectiveController.text != value) {
+      _effectiveController.text = value ?? '';
+    }
   }
 
   @override
   void reset() {
-    super.reset(); // 关键点
-    _controller?.value = widget.initialValue;
+    _effectiveController.text = widget.initialValue ?? '';
+    super.reset();
+    _datePickerFormField.onChanged?.call(_effectiveController.text);
   }
 
-  void _handleControllerChange() {
-    if (_controller?.value != value) {
-      didChange(_controller?.value);
+  void _handleControllerChanged() {
+    if (_effectiveController.text != value) {
+      didChange(_effectiveController.text);
     }
   }
 
   @override
   void dispose() {
-    _controller?.removeListener(_handleControllerChange);
+    _controller?.removeListener(_handleControllerChanged);
     super.dispose();
   }
 }
 
-class _DatePickerFormField<T> extends StatelessWidget {
-  final FormFieldState<T> state;
+class _DatePickerFormField extends StatelessWidget {
+  final FormFieldState<String> state;
   final TextEditingController? controller;
   final String? labelText;
   final DateTime? initialDate; // 初始日期
@@ -82,49 +96,48 @@ class _DatePickerFormField<T> extends StatelessWidget {
   const _DatePickerFormField({
     required this.state,
     this.labelText,
-    this.controller, this.initialDate, this.firstDate, this.lastDate,
+    this.controller,
+    this.initialDate,
+    this.firstDate,
+    this.lastDate,
   });
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: initialDate ?? DateTime.now(),
+      firstDate: firstDate!,
+      lastDate: lastDate!,
+    );
+    if (picked != null && picked != initialDate) {
+      state.didChange(formatDate(picked));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        labelText: widget.labelText,
+        labelText: labelText,
         prefixIcon: const Icon(Icons.calendar_month),
         border: const OutlineInputBorder(),
         contentPadding: const EdgeInsets.symmetric(vertical: 12),
-        suffixIcon: controller.text != '' ? IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            controller.text = '';
-          }, // 点击图标打开日期选择器
-        ) : null,
+        suffixIcon: controller?.text != ''
+            ? IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  controller?.text = '';
+                }, // 点击图标打开日期选择器
+              )
+            : null,
       ),
       readOnly: true, // 禁止手动输入
       onTap: () => _selectDate(context), // 点击输入框打开日期选择器
       onChanged: (String value) {
-        controller.text = value; // 更新 Controller 的值
+        // controller.text = value; // 更新 Controller 的值
         state.didChange(value); // 更新 FormField 的状态
       },
-    );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (labelText != null) Text(labelText!),
-        ...items.map((option) => Row(
-          children: [
-            Radio<T>(
-              value: option.value,
-              groupValue: state.value, // 关键点：绑定到FormField的value
-              onChanged: (value) => state.didChange(value),
-            ),
-            Text(option.label),
-          ],
-        )),
-        if (state.hasError) 
-          Text(state.errorText!, style: TextStyle(color: Colors.red)),
-      ],
     );
   }
 }
@@ -137,6 +150,10 @@ class DatePickerFormFieldController<T> extends ChangeNotifier {
     _value = newValue;
     notifyListeners();
   }
+}
+
+String formatDate(DateTime date) {
+  return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 }
 
 
