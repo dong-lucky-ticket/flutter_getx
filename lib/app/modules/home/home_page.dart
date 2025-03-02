@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_getx/app/modules/create/create_page.dart';
 
 import 'package:flutter_getx/app/modules/home/widgets/custom_drawer_widget.dart';
-import 'package:flutter_getx/app/modules/statistics/statistics_page.dart';
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 import '../../data/model/account.dart';

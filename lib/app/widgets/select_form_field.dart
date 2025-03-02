@@ -54,7 +54,7 @@ class SelectFormFieldState<T> extends State<SelectFormField<T>> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
-      value: _controller.value,
+      value: _controller.text,
       decoration: InputDecoration(
         labelText: widget.labelText,
         hintText: widget.hintText,
@@ -70,10 +70,10 @@ class SelectFormFieldState<T> extends State<SelectFormField<T>> {
       }).toList(),
       validator: widget.validator,
       onChanged: (T? value) {
-        _controller.value = value; // 更新 Controller 的值
+        _controller.text = value; // 更新 Controller 的值
       },
       onSaved: (T? value) {
-        _controller.value = value; // 保存 Controller 的值
+        _controller.text = value; // 保存 Controller 的值
       },
     );
   }
@@ -83,9 +83,9 @@ class SelectFormFieldState<T> extends State<SelectFormField<T>> {
 class SelectFormFieldController<T> extends ChangeNotifier {
   T? _value;
 
-  T? get value => _value;
+  T? get text => _value;
 
-  set value(T? newValue) {
+  set text(T? newValue) {
     if (_value != newValue) {
       _value = newValue;
       notifyListeners(); // 通知监听器

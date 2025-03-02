@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_getx/app/data/model/account.dart';
 import 'package:flutter_getx/app/modules/home/widgets/custom_app_bar.dart';
 import 'package:flutter_getx/app/widgets/date_picker_form_field.dart';
 import 'package:flutter_getx/app/widgets/font_icon.dart';
-import 'package:flutter_getx/app/widgets/radio_form_field.dart';
 import 'package:flutter_getx/app/widgets/select_form_field.dart';
 
 class CreatePage extends StatefulWidget {
@@ -16,7 +16,8 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
   final _descController = TextEditingController();
-  final _dateController = TextEditingController(text: formatDate(DateTime.now()));
+  final _dateController =
+      TextEditingController(text: formatDate(DateTime.now()));
   final _selectedController = SelectFormFieldController();
 
   final _scrollController = ScrollController();
@@ -73,13 +74,25 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
       debugPrint('''
         分类: ${_activeTypeIcons!.title}
         金额: ${_amountController.text}
-        渠道: ${_selectedController.value}
+        日期: ${_dateController.text}
+        网购: ${_selectedController.text}
         说明: ${_descController.text}
       ''');
 
+      final data = AccountModal(
+        type: '收入',
+        money: double.parse(_amountController.text),
+        recordDate: _dateController.text,
+        desc: _descController.text,
+        category: _activeTypeIcons!.title,
+        chennel: _selectedController.text,
+      );
+
+      debugPrint(data.toString());
+
       // 提交后重置表单
       _formKey.currentState!.reset();
-      _selectedController.value = null;
+      _selectedController.text = null;
 
       // setState(() => isBillDetailsVisible = false);
     }
@@ -101,7 +114,7 @@ class _CreatePageState extends State<CreatePage> with TickerProviderStateMixin {
               icon: const Icon(Icons.close, color: Colors.white),
               onPressed: () {
                 _formKey.currentState!.reset();
-                _selectedController.value = null;
+                _selectedController.text = null;
                 // setState(() => isBillDetailsVisible = false);
               },
             )

@@ -1,21 +1,23 @@
 import 'dart:convert';
 
 class AccountModal {
-  String id;
+  String? id;
   String type;
-  String recordDate;
-  double money;
-  String desc;
   String category;
+  double money;
+  String recordDate;
+  String desc;
+  String? chennel;
 
 
   AccountModal({
-    required this.id,
     required this.type,
     required this.recordDate,
     required this.money,
     required this.desc,
     required this.category,
+    this.id,
+    this.chennel,
   });
 
   AccountModal copyWith({
@@ -25,6 +27,7 @@ class AccountModal {
     double? money,
     String? desc,
     String? category,
+    String? chennel,
   }) {
     return AccountModal(
       id: id ?? this.id,
@@ -33,6 +36,7 @@ class AccountModal {
       money: money ?? this.money,
       desc: desc ?? this.desc,
       category: category ?? this.category,
+      chennel: chennel?? this.chennel,
     );
   }
 
@@ -44,17 +48,19 @@ class AccountModal {
       'money': money,
       'desc': desc,
       'category': category,
+      'chennel': chennel,
     };
   }
 
   factory AccountModal.fromMap(Map<String, dynamic> map) {
     return AccountModal(
-      id: map['id'] as String,
       type: map['type'] as String,
       recordDate: map['recordDate'] as String,
       money: map['money'].toDouble(),
       desc: map['desc'] as String,
       category: map['category'] as String,
+      id: map['id'] != null? map['id'] as String : null,
+      chennel: map['chennel'] != null ? map['chennel'] as String : null,
     );
   }
 
@@ -64,7 +70,7 @@ class AccountModal {
 
   @override
   String toString() {
-    return 'AccountModal(id: $id, type: $type, recordDate: $recordDate, money: $money, desc: $desc, category: $category)';
+    return 'AccountModal(id: $id, type: $type, recordDate: $recordDate, money: $money, desc: $desc, category: $category, chennel: $chennel)';
   }
 
   @override
@@ -77,7 +83,8 @@ class AccountModal {
       other.recordDate == recordDate &&
       other.money == money &&
       other.desc == desc &&
-      other.category == category;
+      other.category == category &&
+      other.chennel == chennel;
   }
 
   @override
@@ -87,7 +94,8 @@ class AccountModal {
       recordDate.hashCode ^
       money.hashCode ^
       desc.hashCode ^
-      category.hashCode;
+      category.hashCode ^
+      chennel.hashCode;
   }
   
 }
